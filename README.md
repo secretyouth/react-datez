@@ -1,3 +1,6 @@
+[![npm](https://img.shields.io/npm/v/npm.svg)](http://npmjs.com/package/react-datez)
+[![npm](https://img.shields.io/npm/dw/localeval.svg)](http://npmjs.com/package/react-datez)
+
 ![react-dates-banner](https://user-images.githubusercontent.com/2343152/27081129-5f675992-5082-11e7-8254-0d59e88756a8.png)
 # react-datez
 #### A customizable, flexible and delicious react date picker.
