@@ -1,6 +1,6 @@
 {
-  "name": "react-starter",
-  "version": "1.0.0",
+  "name": "react-datez",
+  "version": "1.0.7",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "clean": "rimraf ./dist && mkdir dist",
     "lint": "eslint ./app"
   },
-  "author": "",
+  "author": "Jamie Hayman",
   "license": "ISC",
   "engines": {
     "node": "6.2.2"

@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react'
 import moment from 'moment'
 import classnames from 'classnames'
 
+require('./styles/components/datepickers.css')
+
 class ReactDatez extends Component {
     constructor(props) {
         super(props)

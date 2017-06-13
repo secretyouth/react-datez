@@ -217,7 +217,7 @@
 			}
 
 			&.selected-day {
-				background: linear-gradient(to left bottom, var(--primary) 25%, var(--primary-alt));
+				background: linear-gradient(to left bottom, #00C6FC 25%, #4E6DEB);
 				color: white;
 			}
 		}
@@ -245,7 +245,7 @@
 		}
 
 		&.selected-day {
-			background: linear-gradient(to left bottom, var(--primary) 25%, var(--primary-alt));
+			background: linear-gradient(to left bottom, #00C6FC 25%, #4E6DEB);
 			border: none !important;
 			color: white !important;
 		}
