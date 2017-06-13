@@ -3,10 +3,10 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
     entry: {
-        app: ['./app/reactDatez.js']
+        app: ['./app/react-datez.js']
     },
     output: {
-        filename: 'js/reactDatez.js',
+        filename: 'js/react-datez.js',
         path: path.resolve(__dirname, './dist'),
         publicPath: '/',
         libraryTarget: 'commonjs2'

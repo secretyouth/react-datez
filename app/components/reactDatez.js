@@ -2,8 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import moment from 'moment'
 import classnames from 'classnames'
 
-require('./styles/components/datepickers.css')
-
 class ReactDatez extends Component {
     constructor(props) {
         super(props)
@@ -50,11 +48,13 @@ class ReactDatez extends Component {
     }
 
     initialisePicker() {
+        const input = this.props.input || {}
+
         this.setState({
-            selectedDate: (this.props.input.value) ? moment(this.props.input.value, this.props.format) : null,
+            selectedDate: (input.value) ? moment(input.value, this.props.format) : null,
             datePickerInputHeight: `${this.dateInput.clientHeight}px`,
             weekStartsOn: moment(`1 ${this.state.currentMonthYear}`, 'D M YYYY').day(),
-            currentMonthYear: (this.props.input.value) ? moment(this.props.input.value, this.props.format).format('M YYYY') : moment().format('M YYYY')
+            currentMonthYear: (input.value) ? moment(input.value, this.props.format).format('M YYYY') : moment().format('M YYYY')
         })
     }
 
@@ -195,6 +195,8 @@ class ReactDatez extends Component {
 
         if (this.props.input) {
             this.props.input.onChange(date)
+        } else {
+            this.props.handleChange(date)
         }
 
         return this.closePicker()
@@ -258,12 +260,7 @@ class ReactDatez extends Component {
     }
 
     render() {
-        const input = this.props.input || null
-        const { touched, error } = this.props.meta || {}
-
-        const showError = classnames('rdatez', {
-            error: touched && error
-        })
+        const input = this.props.input || {}
 
         const pickerClass = classnames('rdatez-picker', {
             'multi-cal': (this.props.displayCalendars > 1),
@@ -272,11 +269,8 @@ class ReactDatez extends Component {
         })
 
         return (
-            <div className={showError} ref={(element) => { this.rdatez = element }} >
-                <input ref={(element) => { this.dateInput = element }} {...input} onFocus={this.openPicker} />
-
-                {touched && error && <div className="help-text error">{error}</div>}
-
+            <div className="rdatez" ref={(element) => { this.rdatez = element }} >
+                { this.props.value ? <input ref={(element) => { this.dateInput = element }} onFocus={this.openPicker} value={this.props.value} onChange={e => this.props.handleChange(e.target.value)} /> : <input ref={(element) => { this.dateInput = element }} {...input} onFocus={this.openPicker} /> }
                 { this.state.datePickerOpen && <div className={pickerClass} style={{ top: this.state.datePickerInputHeight }}>
                     <button className="rdatez-mobile-close" onClick={this.closePicker}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
@@ -336,7 +330,8 @@ ReactDatez.defaultProps = {
 
 ReactDatez.propTypes = {
     input: PropTypes.object,
-    meta: PropTypes.object,
+    handleChange: PropTypes.func,
+    value: PropTypes.string,
     displayCalendars: PropTypes.number,
     highlightWeekends: PropTypes.bool,
     allowPast: PropTypes.bool,

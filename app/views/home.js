@@ -2,16 +2,26 @@ import React, { Component, PropTypes } from 'react'
 import { reduxForm, Field } from 'redux-form'
 // import { connect } from 'react-redux'
 
-import ReactDatez from '../reactDatez'
+import ReactDatez from '../components/reactDatez'
+import ReduxReactDatez from '../components/reduxReactDatez'
 
 class Home extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+            dateInput: 'dicks'
+        }
         this.nextStep = this.nextStep.bind(this)
+        this.handleChange = this.handleChange.bind(this)
     }
 
     nextStep(form) {
         console.log(form)
+    }
+
+    handleChange(value) {
+        console.log('handleChange', value)
+        this.setState({ dateInput: value })
     }
 
     render() {
@@ -22,13 +32,13 @@ class Home extends Component {
                     <h2 className="m-b-1">Single Date Picker</h2>
                     <div className="form-group m-b-3">
                         <label htmlFor="exampleDate1" className="m-b-1">Date</label>
-                        <Field name="exampleDate1" component={ReactDatez} />
+                        <Field name="exampleDate1" component={ReduxReactDatez} />
                     </div>
 
                     <h2 className="m-b-1">Multi Calendar Picker</h2>
                     <div className="form-group m-b-3">
                         <label htmlFor="exampleDate2" className="m-b-1">Check-in Date</label>
-                        <Field name="exampleDate2" component={ReactDatez} displayCalendars={2} />
+                        <ReactDatez name="dateInput" handleChange={this.handleChange} value={this.state.dateInput} />
                     </div>
 
                     <h2 className="m-b-1">Disallow Previous Dates</h2>
