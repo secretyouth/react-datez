@@ -1,0 +1,336 @@
+.rdatez {
+	position: relative;
+
+	& a, & a:link, & a:visited {
+		text-decoration: none;
+		color: inherit;
+	}
+
+	& > div {
+		/*width: 100%;*/
+	}
+
+	&.error .rdatez-picker {
+		color: #666666;
+	}
+
+	&-picker {
+		margin-top: 16px;
+		border: 1px solid #cccccc;
+		border-radius: 4px;
+		padding: 16px;
+		position: absolute;
+		top: 0;
+		left: 0;
+		background: white;
+		width: 100%;
+		box-shadow: 0 5px 10px rgba(0,0,0,.05);
+		z-index: 200;
+
+		@media (width > 768px) {
+			max-width: 400px;
+		}
+
+		&.multi-cal {
+			min-width: auto;
+			max-width: auto;
+
+			@media (width > 768px) {
+				min-width: 700px;
+				max-width: 700px;
+			}
+
+			@media (width < 769px) {
+				& .rdatez-calendar {
+					flex-direction: column;
+				}
+			}
+
+
+			& .rdatez-calendar > div {
+				margin-right: 16px;
+
+				@media (width < 769px) {
+					margin: 0 0 16px;
+				}
+			}
+		}
+
+		&.disallow-past .rdatez-day.past-day {
+			cursor: not-allowed;
+		}
+
+		& > div {
+			position: relative;
+		}
+
+		@media (width < 769px) {
+			position: fixed;
+			margin-top: 0;
+			border-radius: 0;
+			border: none;
+			top: 0 !important;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			min-width: auto;
+		}
+
+		&:before {
+			position: absolute;
+			top: -25px;
+			left: 12px;
+			content: '';
+			border: 12px solid transparent;
+			border-bottom: 12px solid #cccccc;
+		}
+
+		&:after {
+			position: absolute;
+			top: -24px;
+			left: 12px;
+			content: '';
+			border: 12px solid transparent;
+			border-bottom: 12px solid white;
+		}
+	}
+
+	&-header {
+		display: flex;
+		justify-content: center;
+		min-height: 40px;
+
+		& > div {
+			flex-grow: 1;
+			text-align: center;
+			align-self: center;
+			font-weight: 600;
+		}
+	}
+
+	&-mobile-close {
+		display: none;
+		position: absolute;
+		top: 16px;
+		right: 16px;
+
+		& > svg {
+			fill: black;
+			height: 32px;
+			width: 32px;
+		}
+
+		@media (width < 769px) {
+			display: block;
+		}
+	}
+
+	&-btn {
+		background: white;
+		border: 1px solid rgba(0,0,0,.2);
+		border-radius: 4px;
+		text-align: center;
+		height: 36px;
+		width: 40px;
+		padding: 0 8px;
+		position: absolute;
+		top: 0;
+		right: 0;
+		cursor: pointer;
+
+		& > svg {
+			fill: black;
+			width: 18px;
+			height: 18px;
+			vertical-align: top;
+		}
+
+		&-year {
+			right: 48px;
+		}
+
+		&-today {
+			left: 48px;
+		}
+
+		&-prev {
+			left: 0;
+		}
+	}
+
+	&-month-days {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+
+	&-calendar {
+		display: flex;
+		overflow: hidden;
+		justify-content: space-between;
+
+		& > div {
+			width: 100%;
+		}
+
+		&-month, &-year {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			position: absolute;
+			padding: 16px;
+			top: 50px;
+			left: 0;
+			bottom: 0;
+			background: white;
+			width: 100%;
+			border-top: 1px solid rgba(0,0,0,.1);
+    		align-items: center;
+		}
+	}
+
+	&-daysofweek {
+		width: 100%;
+		margin: 16px 0 8px;
+		display: flex;
+
+		& > span {
+			width: 14.285%;
+			font-size: 11px;
+			text-align: center;
+		}
+	}
+
+	& .highlight-weekends &-day {
+		&.weekday-6, &.weekday-0 {
+			background: rgba(0,0,0,.05);
+
+			&:hover {
+				background: rgba(0,0,0,.1);
+			}
+
+			&.past-day {
+				color: rgba(0,0,0,.4) !important;
+			}
+
+			&.selected-day {
+				background: linear-gradient(to left bottom, var(--primary) 25%, var(--primary-alt));
+				color: white;
+			}
+		}
+	}
+
+	&-day {
+		display: flex;
+		background: none;
+		justify-content: center;
+		align-items: center;
+		width: 14.285%;
+		height: 40px;
+		border-right: 1px solid rgba(0,0,0,.1);
+		border-bottom: 1px solid rgba(0,0,0,.1);
+		position: relative;
+		transition: none;
+		cursor: pointer;
+
+		&:after {
+			display: none;
+		}
+
+		&:hover {
+			background: rgba(0,0,0,.1);
+		}
+
+		&.selected-day {
+			background: linear-gradient(to left bottom, var(--primary) 25%, var(--primary-alt));
+			border: none !important;
+			color: white !important;
+		}
+
+		&.past-day {
+			color: rgba(0,0,0,.4) !important;
+
+			&.selected-day {
+				color: white !important;
+			}
+		}
+
+		&.weekday-1 {
+			border-left: 1px solid rgba(0,0,0,.1);
+		}
+
+		&:nth-last-child(-n+8) {
+			border-bottom: 1px solid rgba(0,0,0,.1);
+		}
+
+		&:last-child {
+			border-top: 0;
+		}
+
+
+		&-spacer {
+			border-right: 1px solid rgba(0,0,0,.1);
+			border-bottom: 1px solid rgba(0,0,0,.1);
+
+			&.weekday-1 { display: none; }
+			&.weekday-2 { width: 14.285%; }
+			&.weekday-3 { width: calc(14.285% * 2); }
+			&.weekday-4 { width: calc(14.285% * 3); }
+			&.weekday-5 { width: calc(14.285% * 4); }
+			&.weekday-6 { width: calc(14.285% * 5); }
+			&.weekday-0 { width: calc(14.285% * 6); }
+		}
+	}
+
+	& .starts-on-1 .rdatez-day:nth-child(-n+8) { border-top: 1px solid rgba(0,0,0,.1); }
+	& .starts-on-2 .rdatez-day:nth-child(-n+7) { border-top: 1px solid rgba(0,0,0,.1); }
+	& .starts-on-3 .rdatez-day:nth-child(-n+6) { border-top: 1px solid rgba(0,0,0,.1); }
+	& .starts-on-4 .rdatez-day:nth-child(-n+5) { border-top: 1px solid rgba(0,0,0,.1); }
+	& .starts-on-5 .rdatez-day:nth-child(-n+4) { border-top: 1px solid rgba(0,0,0,.1); }
+	& .starts-on-6 .rdatez-day:nth-child(-n+3) { border-top: 1px solid rgba(0,0,0,.1); }
+	& .starts-on-0 .rdatez-day:nth-child(-n+2) { border-top: 1px solid rgba(0,0,0,.1); }
+
+	&-month {
+		display: flex;
+		background: none;
+		justify-content: center;
+		align-items: center;
+		width: 25%;
+		height: 40px;
+		position: relative;
+		transition: none;
+
+		&:after {
+			display: none;
+		}
+
+		&:hover, &.selected-day {
+			cursor: pointer;
+			background: rgba(0,0,0,.05);
+		}
+	}
+
+
+	&-year {
+		display: flex;
+		background: none;
+		justify-content: center;
+		align-items: center;
+		width: 25%;
+		height: 40px;
+		position: relative;
+		transition: none;
+
+		&:after {
+			display: none;
+		}
+
+		&:hover, &.selected-day {
+			cursor: pointer;
+			background: rgba(0,0,0,.05);
+		}
+	}
+}
