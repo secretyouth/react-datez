@@ -20,8 +20,6 @@
 * Location support
 * Animations
 
----
-
 ## How to use
 There is currently two ways to implement React-datez, as a redux-form component or a standlone date picker.
 
