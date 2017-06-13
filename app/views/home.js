@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import { reduxForm, Field } from 'redux-form'
-// import { connect } from 'react-redux'
 
 import ReactDatez from '../components/reactDatez'
 import ReduxReactDatez from '../components/reduxReactDatez'
@@ -9,7 +8,7 @@ class Home extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            dateInput: 'dicks'
+            dateInput: ''
         }
         this.nextStep = this.nextStep.bind(this)
         this.handleChange = this.handleChange.bind(this)
