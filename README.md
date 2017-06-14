@@ -16,6 +16,7 @@
 * Weekend highlighting
 * Popup position
 * Year & month jumping
+* Custom date formatting
 
 ### Roadmap
 * Multi browser suport
