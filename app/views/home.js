@@ -42,7 +42,7 @@ class Home extends Component {
                     </div>
 
                     <div className="form-group m-b-3">
-                        <label htmlFor="exampleDate3" className="m-b-1">Disallow Past Dates</label>
+                        <label htmlFor="exampleDate3" className="m-b-1">Highlight Weekends</label>
                         <Field name="exampleDate3" component={ReduxReactDatez} highlightWeekends />
                     </div>
 
