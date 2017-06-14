@@ -1,3 +1,6 @@
-const ReactDatez = require('./dist/js/reactDatez.js').default
+const rdatez = require('./dist/js/react-datez.js')
 
-export default ReactDatez
+module.exports = {
+    ReactDatez: rdatez.ReactDatez,
+    ReduxReactDatez: rdatez.ReduxReactDatez
+}

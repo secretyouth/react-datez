@@ -1,17 +1,33 @@
 .rdatez {
 	position: relative;
+	display: inline-block;
 
 	& a, & a:link, & a:visited {
 		text-decoration: none;
-		color: inherit;
-	}
-
-	& > div {
-		/*width: 100%;*/
 	}
 
 	&.error .rdatez-picker {
 		color: #666666;
+	}
+
+	&-centered &-picker {
+		left: 50%;
+		transform: translate(-50%, 0);
+
+		&:before, &:after {
+			left: 50%;
+			transform: translate(-50%, 0);
+		}
+	}
+
+	&-right &-picker {
+		left: auto;
+		right: 0;
+
+		&:before, &:after {
+			left: auto;
+			right: 12px;
+		}
 	}
 
 	&-picker {
@@ -27,8 +43,10 @@
 		box-shadow: 0 5px 10px rgba(0,0,0,.05);
 		z-index: 200;
 
+
 		@media (width > 768px) {
 			max-width: 400px;
+			min-width: 400px;
 		}
 
 		&.multi-cal {
@@ -46,7 +64,6 @@
 				}
 			}
 
-
 			& .rdatez-calendar > div {
 				margin-right: 16px;
 
@@ -58,6 +75,9 @@
 
 		&.disallow-past .rdatez-day.past-day {
 			cursor: not-allowed;
+			&:hover {
+				background: none;
+			}
 		}
 
 		& > div {
@@ -75,7 +95,7 @@
 			left: 0;
 			display: flex;
 			justify-content: center;
-			align-items: center;
+			align-items: flex-start;
 			min-width: auto;
 		}
 
@@ -98,24 +118,12 @@
 		}
 	}
 
-	&-header {
-		display: flex;
-		justify-content: center;
-		min-height: 40px;
-
-		& > div {
-			flex-grow: 1;
-			text-align: center;
-			align-self: center;
-			font-weight: 600;
-		}
-	}
-
 	&-mobile-close {
 		display: none;
 		position: absolute;
-		top: 16px;
-		right: 16px;
+		top: -2px;
+		right: 0;
+		z-index: 100;
 
 		& > svg {
 			fill: black;
@@ -125,6 +133,14 @@
 
 		@media (width < 769px) {
 			display: block;
+		}
+	}
+
+	&-header {
+		@media (width < 769px) {
+			text-align: left;
+			border-bottom: 1px solid rgba(0,0,0,.2);
+			margin-bottom: 32px;
 		}
 	}
 
@@ -140,6 +156,12 @@
 		top: 0;
 		right: 0;
 		cursor: pointer;
+
+		@media (width < 769px) {
+			position: static;
+			margin-bottom: 32px;
+			margin-right: 8px;
+		}
 
 		& > svg {
 			fill: black;
@@ -172,6 +194,13 @@
 		overflow: hidden;
 		justify-content: space-between;
 
+		&-title {
+			font-weight: 800;
+			text-align: center;
+    		padding: 10px 0;
+			color: #666;
+		}
+
 		& > div {
 			width: 100%;
 		}
@@ -196,6 +225,7 @@
 		width: 100%;
 		margin: 16px 0 8px;
 		display: flex;
+		color: #666;
 
 		& > span {
 			width: 14.285%;

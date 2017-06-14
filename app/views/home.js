@@ -19,31 +19,41 @@ class Home extends Component {
     }
 
     handleChange(value) {
-        console.log('handleChange', value)
+        console.log('Non redux input change', value)
         this.setState({ dateInput: value })
     }
 
     render() {
         return (
             <div className="container">
-                <h1>React Datez Example</h1>
+                <img src="/assets/banner.png" alt="React Datez" />
+
+                <hr />
+
                 <form onSubmit={this.props.handleSubmit(this.nextStep)}>
-                    <h2 className="m-b-1">Single Date Picker</h2>
                     <div className="form-group m-b-3">
-                        <label htmlFor="exampleDate1" className="m-b-1">Date</label>
+                        <label htmlFor="exampleDate1" className="m-b-1">Standard Date Picker</label>
                         <Field name="exampleDate1" component={ReduxReactDatez} />
                     </div>
 
-                    <h2 className="m-b-1">Multi Calendar Picker</h2>
                     <div className="form-group m-b-3">
-                        <label htmlFor="exampleDate2" className="m-b-1">Check-in Date</label>
-                        <ReactDatez name="dateInput" handleChange={this.handleChange} value={this.state.dateInput} />
+                        <label htmlFor="exampleDate2" className="m-b-1">Multi-calendar Picker (Non Redux)</label>
+                        <ReactDatez name="dateInput" handleChange={this.handleChange} value={this.state.dateInput} displayCalendars={2} />
                     </div>
 
-                    <h2 className="m-b-1">Disallow Previous Dates</h2>
                     <div className="form-group m-b-3">
-                        <label htmlFor="exampleDate3" className="m-b-1">Check-in Date</label>
-                        <Field name="exampleDate3" component={ReactDatez} allowPast={false} displayCalendars={2} />
+                        <label htmlFor="exampleDate3" className="m-b-1">Disallow Past Dates</label>
+                        <Field name="exampleDate3" component={ReduxReactDatez} highlightWeekends />
+                    </div>
+
+                    <div className="form-group m-b-3">
+                        <label htmlFor="exampleDate4" className="m-b-1">Disallow Past Dates</label>
+                        <Field name="exampleDate4" component={ReduxReactDatez} allowPast={false} displayCalendars={4} position="center" />
+                    </div>
+
+                    <div className="form-group m-b-3">
+                        <label htmlFor="exampleDate5" className="m-b-1">Disallow Year Jump</label>
+                        <Field name="exampleDate5" component={ReduxReactDatez} yearJump={false} />
                     </div>
                 </form>
             </div>

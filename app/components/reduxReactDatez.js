@@ -18,7 +18,7 @@ class ReduxReactDatez extends Component {
 
         return (
             <div className={showError}>
-                <ReactDatez {...this.props} />
+                <ReactDatez {...this.props} isRedux />
                 {touched && error && <div className="help-text error">{error}</div>}
             </div>
         )

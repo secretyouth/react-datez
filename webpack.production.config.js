@@ -1,4 +1,5 @@
 const path = require('path')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
@@ -28,6 +29,10 @@ module.exports = {
         }]
     },
     plugins: [
-        new ExtractTextPlugin('css/reactDatez.css')
+        new ExtractTextPlugin('css/reactDatez.css'),
+        new CopyWebpackPlugin([
+            { from: './app/favicon.ico' },
+            { from: './app/assets', to: 'assets' }
+        ])
     ]
 }

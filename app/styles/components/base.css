@@ -10,6 +10,7 @@ html, body {
 }
 
 body {
+	background: #403855;
     font-family: helvetica, sans-serif;
 	font-weight: 200;
 	font-size: 16px;
@@ -20,11 +21,22 @@ body {
 	padding: 3rem;
 	max-width: 800px;
 	margin: 0 auto;
+	text-align: center;
+
+	@media (width < 769px) {
+		padding: 0;
+	}
+}
+
+img {
+	display: block;
+	width: 100%;
 }
 
 input {
+	background: rgba(0,0,0,.3);
 	padding: .7rem 1rem;
-	border: 1px solid var(--gray);
+	border: 1px solid rgba(0,0,0,.5);
 	border-radius: 4px;
 }
 
@@ -32,6 +44,37 @@ label {
 	display: block;
 }
 
+hr {
+	height: 1px;
+	border: none;
+	background: rgba(255,255,255,.3);
+	margin: 3rem 0;
+	padding: 0;
+}
+
 .m-b-1 { margin-bottom: 1rem; }
 .m-b-2 { margin-bottom: 2rem; }
 .m-b-3 { margin-bottom: 3rem; }
+
+
+.navbar {
+    & a {
+        color: #c5c5c5;
+    }
+    & .heading {
+        color: orange;
+        @media (min-width: 480px) {
+            color: red;
+        }
+    }
+}
+
+.rdatez {
+	& a {
+		color: #666;
+	}
+
+	& input {
+		color: white;
+	}
+}

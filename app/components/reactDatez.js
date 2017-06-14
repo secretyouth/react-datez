@@ -23,7 +23,6 @@ class ReactDatez extends Component {
         this.initialiseMonthCalendar = this.initialiseMonthCalendar.bind(this)
         this.initialiseYearCalendar = this.initialiseYearCalendar.bind(this)
         this.renderCalendar = this.renderCalendar.bind(this)
-        this.renderMonthTitle = this.renderMonthTitle.bind(this)
         this.selectedDate = this.selectedDate.bind(this)
         this.isPast = this.isPast.bind(this)
         this.openPicker = this.openPicker.bind(this)
@@ -51,10 +50,10 @@ class ReactDatez extends Component {
         const input = this.props.input || {}
 
         this.setState({
-            selectedDate: (input.value) ? moment(input.value, this.props.format) : null,
+            selectedDate: (input.value && moment(input.value, this.props.format).isValid()) ? moment(input.value, this.props.format) : '',
             datePickerInputHeight: `${this.dateInput.clientHeight}px`,
             weekStartsOn: moment(`1 ${this.state.currentMonthYear}`, 'D M YYYY').day(),
-            currentMonthYear: (input.value) ? moment(input.value, this.props.format).format('M YYYY') : moment().format('M YYYY')
+            currentMonthYear: (input.value && moment(input.value, this.props.format).isValid()) ? moment(input.value, this.props.format).format('M YYYY') : moment().format('M YYYY')
         })
     }
 
@@ -87,10 +86,15 @@ class ReactDatez extends Component {
         const calendar = []
         for (let i = 0; i < this.props.displayCalendars; i += 1) {
             calendar.push(i)
+
+            if (i === 1) {
+                break
+            }
         }
 
         return calendar.map(i => (
             <div key={`calendar-${i}`}>
+                <header className="rdatez-calendar-title" key={`month-header-${i}`}>{ moment(this.state.currentMonthYear, 'M YYYY').add(i, 'months').format('MMMM YYYY') }</header>
                 <section className="rdatez-daysofweek">
                     <span>M</span>
                     <span>T</span>
@@ -248,19 +252,13 @@ class ReactDatez extends Component {
         return <section className={`rdatez-month-days starts-on-${startsOn}`}>{calendar}</section>
     }
 
-    renderMonthTitle() {
-        const calendar = []
-        for (let i = 0; i < this.props.displayCalendars; i += 1) {
-            calendar.push(i)
-        }
-
-        return calendar.map(i => (
-            <div key={`month-header-${i}`}>{ moment(this.state.currentMonthYear, 'M YYYY').add(i, 'months').format('MMMM YYYY') }</div>
-        ))
-    }
-
     render() {
         const input = this.props.input || {}
+
+        const rdatezClass = classnames('rdatez', {
+            'rdatez-centered': this.props.position === 'center',
+            'rdatez-right': this.props.position === 'right'
+        })
 
         const pickerClass = classnames('rdatez-picker', {
             'multi-cal': (this.props.displayCalendars > 1),
@@ -269,29 +267,28 @@ class ReactDatez extends Component {
         })
 
         return (
-            <div className="rdatez" ref={(element) => { this.rdatez = element }} >
-                { this.props.value ? <input ref={(element) => { this.dateInput = element }} onFocus={this.openPicker} value={this.props.value} onChange={e => this.props.handleChange(e.target.value)} /> : <input ref={(element) => { this.dateInput = element }} {...input} onFocus={this.openPicker} /> }
+            <div className={rdatezClass} ref={(element) => { this.rdatez = element }} >
+                { !this.props.isRedux ? <input ref={(element) => { this.dateInput = element }} onFocus={this.openPicker} name="bll" value={this.props.value} onChange={e => this.props.handleChange(e.target.value)} /> : <input ref={(element) => { this.dateInput = element }} {...input} onFocus={this.openPicker} /> }
                 { this.state.datePickerOpen && <div className={pickerClass} style={{ top: this.state.datePickerInputHeight }}>
-                    <button className="rdatez-mobile-close" onClick={this.closePicker}>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
-                            <path d="M16.8535,8.1465a.5.5,0,0,0-.707,0L12.5,11.793,8.8535,8.1465a.5.5,0,0,0-.707.707L11.793,12.5,8.1465,16.1465a.5.5,0,1,0,.707.707L12.5,13.207l3.6465,3.6465a.5.5,0,0,0,.707-.707L13.207,12.5l3.6465-3.6465A.5.5,0,0,0,16.8535,8.1465Z" />
-                            <path d="M12.5,0A12.5,12.5,0,1,0,25,12.5,12.5,12.5,0,0,0,12.5,0Zm0,24A11.5,11.5,0,1,1,24,12.5,11.5129,11.5129,0,0,1,12.5,24Z" />
-                        </svg>
-                    </button>
                     <div>
                         <header className="rdatez-header">
+                            <button className="rdatez-mobile-close" onClick={this.closePicker}>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
+                                    <path d="M16.8535,8.1465a.5.5,0,0,0-.707,0L12.5,11.793,8.8535,8.1465a.5.5,0,0,0-.707.707L11.793,12.5,8.1465,16.1465a.5.5,0,1,0,.707.707L12.5,13.207l3.6465,3.6465a.5.5,0,0,0,.707-.707L13.207,12.5l3.6465-3.6465A.5.5,0,0,0,16.8535,8.1465Z" />
+                                    <path d="M12.5,0A12.5,12.5,0,1,0,25,12.5,12.5,12.5,0,0,0,12.5,0Zm0,24A11.5,11.5,0,1,1,24,12.5,11.5129,11.5129,0,0,1,12.5,24Z" />
+                                </svg>
+                            </button>
                             <button type="button" className="rdatez-btn rdatez-btn-prev" onClick={this.prevButton}>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
                                     <path d="M14.5,23a.4984.4984,0,0,1-.3535-.1465l-9-9a.5.5,0,0,1,0-.707l9-9a.5.5,0,1,1,.707.707L6.207,13.5l8.6465,8.6465A.5.5,0,0,1,14.5,23Z" />
                                 </svg>
                             </button>
-                            { this.renderMonthTitle() }
-                            <button type="button" className="rdatez-btn rdatez-btn-year" onClick={this.toggleYearJump}>
+                            { this.props.yearJump && <button type="button" className="rdatez-btn rdatez-btn-year" onClick={this.toggleYearJump}>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
                                     <path d="M12.8535,6.8535a.5.5,0,0,0,0-.707l-6-6a.5.5,0,0,0-.707,0l-6,6a.5.5,0,0,0,.707.707L6,1.707V20.5a.5.5,0,0,0,1,0V1.707l5.1465,5.1465A.5.5,0,0,0,12.8535,6.8535Z" />
                                     <path d="M24.8535,18.1465a.5.5,0,0,0-.707,0L19,23.293V4.5a.5.5,0,0,0-1,0V23.293l-5.1465-5.1465a.5.5,0,0,0-.707.707l6,6a.5.5,0,0,0,.707,0l6-6A.5.5,0,0,0,24.8535,18.1465Z" />
                                 </svg>
-                            </button>
+                            </button> }
                             <button type="button" className="rdatez-btn rdatez-btn-today" onClick={e => this.jumpToToday(e)}>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
                                     <path d="M24,3H19V1.5a.5.5,0,0,0-1,0V3H7V1.5a.5.5,0,0,0-1,0V3H1A1,1,0,0,0,0,4V24a1,1,0,0,0,1,1H24a1,1,0,0,0,1-1V4A1,1,0,0,0,24,3Zm0,21H1V9H24ZM24,8H1V4H24Z" />
@@ -325,7 +322,9 @@ ReactDatez.defaultProps = {
     format: 'DD/MM/YYYY',
     displayCalendars: 1,
     highlightWeekends: false,
-    allowPast: true
+    allowPast: true,
+    yearJump: true,
+    position: 'left'
 }
 
 ReactDatez.propTypes = {
@@ -333,9 +332,12 @@ ReactDatez.propTypes = {
     handleChange: PropTypes.func,
     value: PropTypes.string,
     displayCalendars: PropTypes.number,
+    isRedux: PropTypes.bool,
     highlightWeekends: PropTypes.bool,
     allowPast: PropTypes.bool,
-    format: PropTypes.string
+    position: PropTypes.oneOf(['center', 'left', 'right']),
+    format: PropTypes.string,
+    yearJump: PropTypes.bool
 }
 
 export default ReactDatez

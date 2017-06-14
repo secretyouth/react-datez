@@ -35,7 +35,8 @@ module.exports = {
             template: './app/index.ejs'
         }),
         new CopyWebpackPlugin([
-            { from: './app/favicon.ico' }
+            { from: './app/favicon.ico' },
+            { from: './app/assets', to: 'assets' }
         ])
     ],
     devtool: 'eval'

@@ -14,6 +14,7 @@
 * Multi calendar support
 * Disallow past dates
 * Weekend highlighting
+* Popup position
 * Year & month jumping
 
 ### Feature roadmap
@@ -38,7 +39,9 @@ ReactDatez.propTypes = {
     displayCalendars: PropTypes.number,
     highlightWeekends: PropTypes.bool,
     allowPast: PropTypes.bool,
-    format: PropTypes.string
+    position: PropTypes.oneOf(['center', 'left', 'right']),
+    format: PropTypes.string,
+    yearJump: PropTypes.bool
 }
 ```
 #### input
@@ -58,6 +61,10 @@ Show multiple calendars (Max 2).
 Highlight weekends for visual representation
 > Default: false
 
+#### yearJump
+Allow year/month button functionality
+> Default: true
+
 #### allowPast
 Allow dates in the past to be selected.
 > Default: true
@@ -65,6 +72,11 @@ Allow dates in the past to be selected.
 #### format
 Format for the date to be displayed and stored as. See moment.js for formatting.
 > Default: DD/MM/YYYY
+
+#### position
+Positioning of the popup, 'left', 'center', 'right'
+> Default: 'left'
+
 
 ---
 
