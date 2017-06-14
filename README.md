@@ -28,6 +28,14 @@ There is currently two ways to implement React-datez, as a redux-form component 
 
 `npm i --save react-datez`
 
+Add css to to your project (uses post-css)
+
+`@import 'react-datez/dist/css/reactDatez.css';`
+
+Than import into your components
+
+`import { ReactDatez, ReduxReactDatez } from 'react-datez'`
+
 ---
 
 ### Props
