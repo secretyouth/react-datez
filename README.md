@@ -17,7 +17,8 @@
 * Popup position
 * Year & month jumping
 
-### Feature roadmap
+### Roadmap
+* Multi browser suport
 * Date range selection
 * Blockout days
 * Location support
