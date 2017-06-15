@@ -18,6 +18,11 @@
 			left: 50%;
 			transform: translate(-50%, 0);
 		}
+
+        @media (width < 769px) {
+            transform: none;
+            left: 0;
+        }
 	}
 
 	&-right &-picker {
@@ -42,6 +47,7 @@
 		width: 100%;
 		box-shadow: 0 5px 10px rgba(0,0,0,.05);
 		z-index: 200;
+        overflow: scroll;
 
 
 		@media (width > 768px) {
@@ -70,13 +76,6 @@
 				@media (width < 769px) {
 					margin: 0 0 16px;
 				}
-			}
-		}
-
-		&.disallow-past .rdatez-day.past-day {
-			cursor: not-allowed;
-			&:hover {
-				background: none;
 			}
 		}
 
@@ -139,8 +138,12 @@
 	&-header {
 		@media (width < 769px) {
 			text-align: left;
-			border-bottom: 1px solid rgba(0,0,0,.2);
-			margin-bottom: 32px;
+            position: fixed;
+            left: 0;
+            right: 0;
+            padding: 0 16px;
+            background: white;
+    		box-shadow: 0 5px 10px rgba(0,0,0,.05);
 		}
 	}
 
@@ -159,7 +162,7 @@
 
 		@media (width < 769px) {
 			position: static;
-			margin-bottom: 32px;
+			margin-bottom: 16px;
 			margin-right: 8px;
 		}
 
@@ -193,6 +196,11 @@
 		display: flex;
 		overflow: hidden;
 		justify-content: space-between;
+
+
+		@media (width < 769px) {
+            margin-top: 80px;
+        }
 
 		&-title {
 			font-weight: 800;
@@ -234,7 +242,7 @@
 		}
 	}
 
-	& .highlight-weekends &-day {
+	/*& .highlight-weekends &-day {
 		&.weekday-6, &.weekday-0 {
 			background: rgba(0,0,0,.05);
 
@@ -253,6 +261,12 @@
 		}
 	}
 
+    & .highlight-weekends.disallow-past &-day.past-day  {
+		&.weekday-6, &.weekday-0 {
+			background: rgba(0,0,0,.05);
+        }
+    }*/
+
 	&-day {
 		display: flex;
 		background: none;
@@ -268,25 +282,7 @@
 
 		&:after {
 			display: none;
-		}
-
-		&:hover {
-			background: rgba(0,0,0,.1);
-		}
-
-		&.selected-day {
-			background: linear-gradient(to left bottom, #00C6FC 25%, #4E6DEB);
-			border: none !important;
-			color: white !important;
-		}
-
-		&.past-day {
-			color: rgba(0,0,0,.4) !important;
-
-			&.selected-day {
-				color: white !important;
-			}
-		}
+        }
 
 		&.weekday-1 {
 			border-left: 1px solid rgba(0,0,0,.1);
@@ -363,4 +359,52 @@
 			background: rgba(0,0,0,.05);
 		}
 	}
+}
+
+.rdatez-day {
+    color: #666;
+
+    &:hover {
+        background: rgba(0,0,0,0.1);
+    }
+
+    &.past-day {
+        color: rgba(0,0,0,0.4)
+    }
+}
+
+.disallow-past a.rdatez-day, .disallow-future a.rdatez-day {
+    color: #666;
+}
+
+.disallow-past a.rdatez-day.past-day {
+    color: rgba(0,0,0,0.1);
+    cursor: not-allowed;
+
+    &:hover {
+        background: none;
+    }
+}
+
+.highlight-weekends a.rdatez-day.weekday-6, .highlight-weekends a.rdatez-day.weekday-0 {
+    background: rgba(0,0,0,.05);
+
+    &:hover {
+        background: rgba(0,0,0,0.1);
+    }
+}
+
+a.selected-day, .disallow-past a.rdatez-day.selected-day, .disallow-past a.rdatez-day.today.selected-day, .disallow-future a.rdatez-day.today.selected-day, .rdatez-day.past-day.selected-day, .highlight-weekends a.rdatez-day.weekday-6.selected-day, .highlight-weekends a.rdatez-day.weekday-0.selected-day{
+    background: linear-gradient(to left bottom, #00C6FC 25%, #4E6DEB);
+    border: none;
+    color: white;
+}
+
+.disallow-future a.rdatez-day:not(.past-day):not(.today) {
+    color: rgba(0,0,0,0.1);
+    cursor: not-allowed;
+
+    &:hover {
+        background: none;
+    }
 }

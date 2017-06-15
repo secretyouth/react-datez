@@ -29,7 +29,7 @@ module.exports = {
         }]
     },
     plugins: [
-        new ExtractTextPlugin('css/reactDatez.css'),
+        new ExtractTextPlugin('css/react-datez.css'),
         new CopyWebpackPlugin([
             { from: './app/favicon.ico' },
             { from: './app/assets', to: 'assets' }
