@@ -242,31 +242,6 @@
 		}
 	}
 
-	/*& .highlight-weekends &-day {
-		&.weekday-6, &.weekday-0 {
-			background: rgba(0,0,0,.05);
-
-			&:hover {
-				background: rgba(0,0,0,.1);
-			}
-
-			&.past-day {
-				color: rgba(0,0,0,.4) !important;
-			}
-
-			&.selected-day {
-				background: linear-gradient(to left bottom, #00C6FC 25%, #4E6DEB);
-				color: white;
-			}
-		}
-	}
-
-    & .highlight-weekends.disallow-past &-day.past-day  {
-		&.weekday-6, &.weekday-0 {
-			background: rgba(0,0,0,.05);
-        }
-    }*/
-
 	&-day {
 		display: flex;
 		background: none;
