@@ -47,13 +47,25 @@ class Home extends Component {
                     </div>
 
                     <div className="form-group m-b-3">
-                        <label htmlFor="exampleDate4" className="m-b-1">Disallow Past Dates</label>
-                        <Field name="exampleDate4" component={ReduxReactDatez} allowPast={false} displayCalendars={4} position="center" />
+                        <label htmlFor="exampleDate4" className="m-b-1">Allow Past Dates</label>
+                        <Field name="exampleDate4" component={ReduxReactDatez} allowPast displayCalendars={2} position="center" />
                     </div>
 
                     <div className="form-group m-b-3">
-                        <label htmlFor="exampleDate5" className="m-b-1">Disallow Year Jump</label>
-                        <Field name="exampleDate5" component={ReduxReactDatez} yearJump={false} />
+                        <label htmlFor="exampleDate5" className="m-b-1">Disallow Future Dates</label>
+                        <Field name="exampleDate5" component={ReduxReactDatez} allowPast allowFuture={false} displayCalendars={2} position="center" />
+                    </div>
+
+                    <div className="form-group m-b-3">
+                        <label htmlFor="exampleDate6" className="m-b-1">Disallow Year Jump</label>
+                        <Field name="exampleDate6" component={ReduxReactDatez} yearJump={false} />
+                    </div>
+
+                    <hr />
+
+                    <div className="form-group m-b-3">
+                        <label htmlFor="dateOfBirth" className="m-b-1">Date of Birth</label>
+                        <Field name="dateOfBirth" component={ReduxReactDatez} allowPast allowFuture={false} displayCalendars={2} position="center" />
                     </div>
                 </form>
             </div>

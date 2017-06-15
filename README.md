@@ -33,7 +33,7 @@ There is currently two ways to implement React-datez, as a redux-form component 
 
 Add css to to your project (uses post-css)
 
-`@import 'react-datez/dist/css/reactDatez.css';`
+`@import 'react-datez/dist/css/react-datez.css';`
 
 Than import into your components
 
@@ -78,6 +78,10 @@ Allow year/month button functionality
 
 #### allowPast
 Allow dates in the past to be selected.
+> Default: false
+
+#### allowFuture
+Allow dates in the future to be selected.
 > Default: true
 
 #### format
