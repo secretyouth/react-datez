@@ -60,6 +60,13 @@ class Home extends Component {
                         <label htmlFor="exampleDate6" className="m-b-1">Disallow Year Jump</label>
                         <Field name="exampleDate6" component={ReduxReactDatez} yearJump={false} />
                     </div>
+
+                    <hr />
+
+                    <div className="form-group m-b-3">
+                        <label htmlFor="dateOfBirth" className="m-b-1">Date of Birth</label>
+                        <Field name="dateOfBirth" component={ReduxReactDatez} allowPast allowFuture={false} displayCalendars={2} position="center" />
+                    </div>
                 </form>
             </div>
         )

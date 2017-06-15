@@ -47,7 +47,10 @@
 		width: 100%;
 		box-shadow: 0 5px 10px rgba(0,0,0,.05);
 		z-index: 200;
-        overflow: scroll;
+
+        @media (width < 769px) {
+            overflow: scroll;
+        }
 
 
 		@media (width > 768px) {
@@ -144,6 +147,7 @@
             padding: 0 16px;
             background: white;
     		box-shadow: 0 5px 10px rgba(0,0,0,.05);
+            z-index: 999;
 		}
 	}
 
@@ -217,7 +221,7 @@
 			display: flex;
 			flex-direction: row;
 			flex-wrap: wrap;
-			position: absolute;
+			position: fixed;
 			padding: 16px;
 			top: 50px;
 			left: 0;
@@ -226,6 +230,7 @@
 			width: 100%;
 			border-top: 1px solid rgba(0,0,0,.1);
     		align-items: center;
+            height: 100%;
 		}
 	}
 
