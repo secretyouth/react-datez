@@ -221,7 +221,7 @@
 			display: flex;
 			flex-direction: row;
 			flex-wrap: wrap;
-			position: fixed;
+			position: absolute;
 			padding: 16px;
 			top: 50px;
 			left: 0;
@@ -230,7 +230,11 @@
 			width: 100%;
 			border-top: 1px solid rgba(0,0,0,.1);
     		align-items: center;
-            height: 100%;
+
+            @media (width < 769px) {
+                position: fixed;
+                height: 100%;
+            }
 		}
 	}
 
@@ -375,7 +379,7 @@
 }
 
 a.selected-day, .disallow-past a.rdatez-day.selected-day, .disallow-past a.rdatez-day.today.selected-day, .disallow-future a.rdatez-day.today.selected-day, .rdatez-day.past-day.selected-day, .highlight-weekends a.rdatez-day.weekday-6.selected-day, .highlight-weekends a.rdatez-day.weekday-0.selected-day{
-    background: linear-gradient(to left bottom, #00C6FC 25%, #4E6DEB);
+    background: linear-gradient(to left bottom, #14E3AD 25%, #0BC091);
     border: none;
     color: white;
 }
