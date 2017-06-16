@@ -11,8 +11,15 @@
     "clean": "rimraf ./dist && mkdir dist",
     "lint": "eslint ./app"
   },
-  "author": "Jamie Hayman",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/secretyouth/react-datez.git"
+  },
+  "author": "Jamie Hayman <jamie@rkda.com.au>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/secretyouth/react-datez/issues"
+  },
   "engines": {
     "node": "6.2.2"
   },
