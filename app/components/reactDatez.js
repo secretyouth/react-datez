@@ -165,7 +165,7 @@ class ReactDatez extends Component {
         })
 
         if (this.props.input) {
-            this.props.input.onChange(date)
+            this.props.input.onChange(moment(date, this.props.format).format('YYYY-MM-DD'))
         }
     }
 
@@ -213,9 +213,9 @@ class ReactDatez extends Component {
         })
 
         if (this.props.input) {
-            this.props.input.onChange(date)
+            this.props.input.onChange(moment(date, this.props.format).format('YYYY-MM-DD'))
         } else {
-            this.props.handleChange(date)
+            this.props.handleChange(moment(date, this.props.format).format('YYYY-MM-DD'))
         }
 
         return this.closePicker()
@@ -285,7 +285,7 @@ class ReactDatez extends Component {
 
         return (
             <div className={rdatezClass} ref={(element) => { this.rdatez = element }} >
-                { !this.props.isRedux ? <input ref={(element) => { this.dateInput = element }} onFocus={this.openPicker} readOnly value={this.props.value} onChange={e => this.props.handleChange(e.target.value)} /> : <input ref={(element) => { this.dateInput = element }} {...input} readOnly onFocus={this.openPicker} /> }
+                { !this.props.isRedux ? <input onClick={this.openPicker} onFocus={this.openPicker} readOnly value={moment(this.props.value, 'YYYY-MM-DD').format(this.props.format)} ref={(element) => { this.dateInput = element }} /> : <input onClick={this.openPicker} onFocus={this.openPicker} readOnly value={input.value && moment(input.value, 'YYYY-MM-DD').format(this.props.format)} ref={(element) => { this.dateInput = element }} /> }
                 { this.state.datePickerOpen && <div className={pickerClass} style={{ top: this.state.datePickerInputHeight }}>
                     <div>
                         <header className="rdatez-header">
