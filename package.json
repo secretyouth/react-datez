@@ -20,9 +20,6 @@
   "bugs": {
     "url": "https://github.com/secretyouth/react-datez/issues"
   },
-  "engines": {
-    "node": "6.2.2"
-  },
   "dependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "classnames": "^2.2.5",
