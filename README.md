@@ -20,7 +20,9 @@
 * Custom date formatting
 
 ### Roadmap
-* Multi browser suport
+* Multi browser support
+* Localization
+* Time Picker
 * Date range selection
 * Blockout days
 * Location support
@@ -52,7 +54,8 @@ ReactDatez.propTypes = {
     allowPast: PropTypes.bool,
     position: PropTypes.oneOf(['center', 'left', 'right']),
     format: PropTypes.string,
-    yearJump: PropTypes.bool
+    yearJump: PropTypes.bool,
+    placeholder: PropTypes.string
 }
 ```
 #### input
@@ -91,6 +94,10 @@ Format for the date to be displayed and stored as. See moment.js for formatting.
 #### position
 Positioning of the popup, 'left', 'center', 'right'
 > Default: 'left'
+
+#### placeholder
+Add a placeholder in the input fields
+> Default: ''
 
 
 ---
