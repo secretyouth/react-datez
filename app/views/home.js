@@ -1,5 +1,5 @@
-import React, { Component, PropTypes } from 'react'
-import { reduxForm, Field } from 'redux-form'
+import React, {Component, PropTypes} from 'react'
+import {reduxForm, Field} from 'redux-form'
 
 import ReactDatez from '../components/reactDatez'
 import ReduxReactDatez from '../components/reduxReactDatez'
@@ -38,7 +38,8 @@ class Home extends Component {
 
                     <div className="form-group m-b-3">
                         <label htmlFor="exampleDate2" className="m-b-1">Multi-calendar Picker (Non Redux)</label>
-                        <ReactDatez name="dateInput" handleChange={this.handleChange} value={this.state.dateInput} displayCalendars={2} />
+                        <ReactDatez name="dateInput" handleChange={this.handleChange} value={this.state.dateInput}
+                                    displayCalendars={2} placeholder="Multi-calendar"/>
                     </div>
 
                     <div className="form-group m-b-3">
