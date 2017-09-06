@@ -26,6 +26,8 @@ class ReactDatez extends Component {
         this.selectedDate = this.selectedDate.bind(this)
         this.isPast = this.isPast.bind(this)
         this.isFuture = this.isFuture.bind(this)
+        this.isBeforeStartDate = this.isBeforeStartDate.bind(this)
+        this.isAfterEndDate = this.isAfterEndDate.bind(this)
         this.openPicker = this.openPicker.bind(this)
         this.closePicker = this.closePicker.bind(this)
         this.toggleYearJump = this.toggleYearJump.bind(this)
@@ -134,6 +136,22 @@ class ReactDatez extends Component {
         return false
     }
 
+    isBeforeStartDate(date) {
+        if (moment(this.props.endDate, this.props.format).diff(moment(date, this.props.format)) < 0) {
+            return true
+        }
+
+        return false
+    }
+
+    isAfterEndDate(date) {
+        if (moment(this.props.startDate, this.props.format).diff(moment(date, this.props.format)) > 0) {
+            return true
+        }
+
+        return false
+    }
+
     openPicker() {
         this.setState({
             datePickerOpen: true
@@ -208,6 +226,14 @@ class ReactDatez extends Component {
             return false
         }
 
+        if (this.isBeforeStartDate(date) && this.props.startDate) {
+            return false
+        }
+
+        if (this.isAfterEndDate(date) && this.props.endDate) {
+            return false
+        }
+
         this.setState({
             selectedDate: date
         })
@@ -259,6 +285,8 @@ class ReactDatez extends Component {
             const dayClasses = classnames(`rdatez-day weekday-${day.day()} ${day.format('M-YYYY')}-${i}`, {
                 'selected-day': this.selectedDate(day.format(this.props.format)),
                 'past-day': this.isPast(day.format(this.props.format)),
+                'before-start': this.isBeforeStartDate(day.format(this.props.format)),
+                'after-end': this.isAfterEndDate(day.format(this.props.format)),
                 today: moment().startOf('day').diff(day, 'days') === 0
             })
 
@@ -280,7 +308,9 @@ class ReactDatez extends Component {
             'multi-cal': (this.props.displayCalendars > 1),
             'highlight-weekends': this.props.highlightWeekends,
             'disallow-past': !this.props.allowPast,
-            'disallow-future': !this.props.allowFuture
+            'disallow-future': !this.props.allowFuture,
+            'disallow-before-start': this.props.startDate,
+            'disallow-after-end': this.props.endDate
         })
 
         return (
@@ -366,6 +396,8 @@ ReactDatez.propTypes = {
     highlightWeekends: PropTypes.bool,
     allowPast: PropTypes.bool,
     allowFuture: PropTypes.bool,
+    startDate: PropTypes.instanceOf(Date),
+    endDate: PropTypes.instanceOf(Date),
     position: PropTypes.oneOf(['center', 'left', 'right']),
     format: PropTypes.string,
     yearJump: PropTypes.bool,
