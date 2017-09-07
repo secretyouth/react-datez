@@ -316,19 +316,21 @@ class ReactDatez extends Component {
         return (
             <div className={rdatezClass} ref={(element) => { this.rdatez = element }} >
                 {!this.props.isRedux ?
-                    <input onClick={this.openPicker} onFocus={this.openPicker} readOnly
-                                              placeholder={this.props.placeholder}
-                                              value={this.props.value && moment(this.props.value, 'YYYY-MM-DD').format(this.props.format)}
-                                              ref={(element) => {
-                                                  this.dateInput = element
-                                              }}/> :
-                    <input onClick={this.openPicker} placeholder={this.props.placeholder} onFocus={this.openPicker}
-                           readOnly value={input.value && moment(input.value, 'YYYY-MM-DD').format(this.props.format)}
-                           ref={(element) => {
-                               this.dateInput = element
-                           }}/>}
+                    <input
+                        onClick={this.openPicker}
+                        onFocus={this.openPicker} readOnly
+                        placeholder={this.props.placeholder}
+                        value={this.props.value && moment(this.props.value, 'YYYY-MM-DD').format(this.props.format)}
+                        ref={(element) => { this.dateInput = element }}
+                    /> :
+                    <input
+                        onClick={this.openPicker} placeholder={this.props.placeholder} onFocus={this.openPicker}
+                        readOnly value={input.value && moment(input.value, 'YYYY-MM-DD').format(this.props.format)}
+                        ref={(element) => { this.dateInput = element }}
+                    />
+                    }
                 {this.state.datePickerOpen &&
-                <div className={pickerClass} style={{top: this.state.datePickerInputHeight}}>
+                <div className={pickerClass} style={{ top: this.state.datePickerInputHeight }}>
                     <div>
                         <header className="rdatez-header">
                             <button className="rdatez-mobile-close" onClick={this.closePicker}>
