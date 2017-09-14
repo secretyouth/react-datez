@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { reduxForm, Field } from 'redux-form'
+import moment from 'moment'
 
 import ReactDatez from '../components/reactDatez'
 import ReduxReactDatez from '../components/reduxReactDatez'
@@ -57,8 +58,13 @@ class Home extends Component {
                     </div>
 
                     <div className="form-group m-b-3">
+                        <label htmlFor="exampleDate5" className="m-b-1">Disallow Dates Outside of Range</label>
+                        <Field name="exampleDate6" component={ReduxReactDatez} displayCalendars={2} startDate={moment().add(4, 'days')} endDate={moment().add(12, 'days')} position="center" />
+                    </div>
+
+                    <div className="form-group m-b-3">
                         <label htmlFor="exampleDate6" className="m-b-1">Disallow Year Jump</label>
-                        <Field name="exampleDate6" component={ReduxReactDatez} yearJump={false} />
+                        <Field name="exampleDate8" component={ReduxReactDatez} yearJump={false} />
                     </div>
 
                     <hr />
