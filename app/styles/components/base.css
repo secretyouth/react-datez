@@ -77,4 +77,7 @@ hr {
 	& input {
 		color: white;
 	}
+	& svg.cal-icon {
+		fill: var(--gray-light);
+	}
 }

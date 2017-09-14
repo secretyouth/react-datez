@@ -1,3 +1,9 @@
+body.date-open {
+	@media (width < 769px) {
+		overflow: hidden;
+	}
+}
+
 .rdatez {
 	position: relative;
 	display: inline-block;
@@ -23,6 +29,16 @@
             transform: none;
             left: 0;
         }
+	}
+
+	& .cal-icon {
+		position: absolute;
+		top: 50%;
+		right: 10px;
+		transform: translate(0, -50%);
+		width: 18px;
+		height: 18px;
+		fill: var(--gray-dark);
 	}
 
 	&-right &-picker {
@@ -123,9 +139,11 @@
 	&-mobile-close {
 		display: none;
 		position: absolute;
-		top: -2px;
-		right: 0;
+		top: -1px;
+		right: 10px;
 		z-index: 100;
+		background: none;
+		border: none;
 
 		& > svg {
 			fill: black;
@@ -178,11 +196,11 @@
 		}
 
 		&-year {
-			right: 48px;
+			left: 48px;
 		}
 
 		&-today {
-			left: 48px;
+			right: 48px;
 		}
 
 		&-prev {

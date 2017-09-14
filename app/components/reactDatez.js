@@ -135,12 +135,16 @@ class ReactDatez extends Component {
     }
 
     openPicker() {
+        document.body.classList.add('date-open')
+
         this.setState({
             datePickerOpen: true
         })
     }
 
     closePicker() {
+        document.body.classList.remove('date-open')
+
         this.setState({
             datePickerOpen: false
         })
@@ -161,7 +165,9 @@ class ReactDatez extends Component {
 
         this.setState({
             currentMonthYear: moment().format('M YYYY'),
-            selectedDate: date
+            selectedDate: date,
+            yearJumpOpen: false,
+            monthSelectOpen: false
         })
 
         if (this.props.input) {
@@ -286,19 +292,30 @@ class ReactDatez extends Component {
         return (
             <div className={rdatezClass} ref={(element) => { this.rdatez = element }} >
                 {!this.props.isRedux ?
-                    <input onClick={this.openPicker} onFocus={this.openPicker} readOnly
-                                              placeholder={this.props.placeholder}
-                                              value={this.props.value && moment(this.props.value, 'YYYY-MM-DD').format(this.props.format)}
-                                              ref={(element) => {
-                                                  this.dateInput = element
-                                              }}/> :
-                    <input onClick={this.openPicker} placeholder={this.props.placeholder} onFocus={this.openPicker}
-                           readOnly value={input.value && moment(input.value, 'YYYY-MM-DD').format(this.props.format)}
-                           ref={(element) => {
-                               this.dateInput = element
-                           }}/>}
-                {this.state.datePickerOpen &&
-                <div className={pickerClass} style={{top: this.state.datePickerInputHeight}}>
+                    <input
+                        onClick={this.openPicker}
+                        placeholder={this.props.placeholder}
+                        onFocus={this.openPicker}
+                        value={this.props.value && moment(this.props.value, 'YYYY-MM-DD').format(this.props.format)}
+                        ref={(element) => {
+                            this.dateInput = element
+                        }}
+                    /> :
+                    <input
+                        onClick={this.openPicker}
+                        placeholder={this.props.placeholder}
+                        onFocus={this.openPicker}
+                        value={input.value && moment(input.value, 'YYYY-MM-DD').format(this.props.format)}
+                        ref={(element) => {
+                            this.dateInput = element
+                        }}
+                    /> }
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" className="cal-icon">
+                    <g id="budicon-calendar">
+                        <path d="M24,2H19V.5a.5.5,0,0,0-1,0V2H7V.5a.5.5,0,0,0-1,0V2H1A1,1,0,0,0,0,3V23a1,1,0,0,0,1,1H24a1,1,0,0,0,1-1V3A1,1,0,0,0,24,2Zm0,21H1V8H24ZM24,7H1V3H24Z" />
+                    </g>
+                </svg>
+                { this.state.datePickerOpen && <div className={pickerClass} style={{ top: this.state.datePickerInputHeight }}>
                     <div>
                         <header className="rdatez-header">
                             <button className="rdatez-mobile-close" onClick={this.closePicker}>
