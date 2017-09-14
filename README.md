@@ -14,6 +14,7 @@
 * Standalone picker
 * Multi calendar support
 * Disallow past dates
+* Disallow dates outside of a range
 * Weekend highlighting
 * Popup position
 * Year & month jumping
@@ -23,7 +24,6 @@
 * Multi browser support
 * Localization
 * Time Picker
-* Date range selection
 * Blockout days
 * Location support
 * Animations
@@ -53,6 +53,8 @@ ReactDatez.propTypes = {
     highlightWeekends: PropTypes.bool,
     allowPast: PropTypes.bool,
     position: PropTypes.oneOf(['center', 'left', 'right']),
+    startDate: PropTypes.instanceOf(Date),
+    endDate: PropTypes.instanceOf(Date),
     format: PropTypes.string,
     yearJump: PropTypes.bool,
     placeholder: PropTypes.string
@@ -86,6 +88,12 @@ Allow dates in the past to be selected.
 #### allowFuture
 Allow dates in the future to be selected.
 > Default: true
+
+#### startDate
+Disallow dates before a given date
+
+#### endDate
+Disallow dates after a given date
 
 #### format
 Format for the date to be displayed and stored as. See moment.js for formatting.
