@@ -38,7 +38,7 @@ body.date-open {
 		transform: translate(0, -50%);
 		width: 18px;
 		height: 18px;
-		fill: var(--gray-dark);
+		fill: #3E3E3E;
 	}
 
 	&-right &-picker {

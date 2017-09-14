@@ -194,7 +194,7 @@ class ReactDatez extends Component {
         })
 
         if (this.props.input) {
-            this.props.input.onChange(moment(date, this.props.format).format('YYYY-MM-DD'))
+            this.props.input.onChange(moment(date, this.props.format))
         }
 
         return true
@@ -252,9 +252,9 @@ class ReactDatez extends Component {
         })
 
         if (this.props.input) {
-            this.props.input.onChange(moment(date, this.props.format).format('YYYY-MM-DD'))
+            this.props.input.onChange(moment(date, this.props.format))
         } else {
-            this.props.handleChange(moment(date, this.props.format).format('YYYY-MM-DD'))
+            this.props.handleChange(moment(date, this.props.format))
         }
 
         return this.closePicker()
@@ -333,6 +333,7 @@ class ReactDatez extends Component {
                         onClick={this.openPicker}
                         placeholder={this.props.placeholder}
                         onFocus={this.openPicker}
+                        readOnly
                         value={this.props.value && moment(this.props.value, 'YYYY-MM-DD').format(this.props.format)}
                         ref={(element) => {
                             this.dateInput = element
@@ -342,6 +343,7 @@ class ReactDatez extends Component {
                         onClick={this.openPicker}
                         placeholder={this.props.placeholder}
                         onFocus={this.openPicker}
+                        readOnly
                         value={input.value && moment(input.value, 'YYYY-MM-DD').format(this.props.format)}
                         ref={(element) => {
                             this.dateInput = element
@@ -420,8 +422,8 @@ ReactDatez.propTypes = {
     highlightWeekends: PropTypes.bool,
     allowPast: PropTypes.bool,
     allowFuture: PropTypes.bool,
-    startDate: PropTypes.instanceOf(Date),
-    endDate: PropTypes.instanceOf(Date),
+    startDate: PropTypes.object,
+    endDate: PropTypes.object,
     position: PropTypes.oneOf(['center', 'left', 'right']),
     format: PropTypes.string,
     yearJump: PropTypes.bool,
