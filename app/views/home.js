@@ -59,7 +59,7 @@ class Home extends Component {
 
                     <div className="form-group m-b-3">
                         <label htmlFor="exampleDate5" className="m-b-1">Disallow Dates Outside of Range</label>
-                        <Field name="exampleDate6" component={ReduxReactDatez} displayCalendars={2} startDate={moment().add(4, 'days')} endDate={moment().add(12, 'days')} position="center" />
+                        <Field name="exampleDate6" component={ReduxReactDatez} displayCalendars={2} startDate={moment().add(4, 'days').format()} endDate={moment().add(12, 'days').format()} position="center" />
                     </div>
 
                     <div className="form-group m-b-3">

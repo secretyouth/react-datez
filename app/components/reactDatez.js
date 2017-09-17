@@ -137,7 +137,7 @@ class ReactDatez extends Component {
     }
 
     isBeforeStartDate(date) {
-        if (moment(this.props.endDate, this.props.format).diff(moment(date, this.props.format)) < 0) {
+        if (moment(this.props.endDate).diff(moment(date, this.props.format)) < 0) {
             return true
         }
 
@@ -145,7 +145,7 @@ class ReactDatez extends Component {
     }
 
     isAfterEndDate(date) {
-        if (moment(this.props.startDate, this.props.format).diff(moment(date, this.props.format)) > 0) {
+        if (moment(this.props.startDate).diff(moment(date, this.props.format)) > 0) {
             return true
         }
 
@@ -422,8 +422,8 @@ ReactDatez.propTypes = {
     highlightWeekends: PropTypes.bool,
     allowPast: PropTypes.bool,
     allowFuture: PropTypes.bool,
-    startDate: PropTypes.object,
-    endDate: PropTypes.object,
+    startDate: PropTypes.string,
+    endDate: PropTypes.string,
     position: PropTypes.oneOf(['center', 'left', 'right']),
     format: PropTypes.string,
     yearJump: PropTypes.bool,
