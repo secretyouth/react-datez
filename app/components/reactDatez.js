@@ -252,9 +252,9 @@ class ReactDatez extends Component {
         })
 
         if (this.props.input) {
-            this.props.input.onChange(moment(date, this.props.format))
+            this.props.input.onChange(moment(date, this.props.format).format())
         } else {
-            this.props.handleChange(moment(date, this.props.format))
+            this.props.handleChange(moment(date, this.props.format).format())
         }
 
         return this.closePicker()
