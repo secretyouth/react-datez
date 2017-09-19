@@ -1,11 +1,12 @@
 {
   "name": "react-datez",
-  "version": "1.2.2",
+  "version": "1.2.4",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "npm run lint && npm run clean && webpack --progress -p --config webpack.production.config.js",
     "start": "webpack-dev-server --progress --history-api-fallback --hot --inline --port 9001 --open",
+    "deploy": "npm run build && npm publish",
     "dev": "npm run start",
     "dev:remote": "webpack-dev-server --progress --history-api-fallback --hot --inline --host 0.0.0.0 --port 9000 --open",
     "clean": "rimraf ./dist && mkdir dist",
