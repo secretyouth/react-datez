@@ -55,7 +55,7 @@ ReactDatez.propTypes = {
     position: PropTypes.oneOf(['center', 'left', 'right']),
     startDate: PropTypes.instanceOf(Date),
     endDate: PropTypes.instanceOf(Date),
-    format: PropTypes.string,
+    dateFormat: PropTypes.string,
     yearJump: PropTypes.bool,
     placeholder: PropTypes.string
 }
@@ -95,7 +95,7 @@ Disallow dates before a given date
 #### endDate
 Disallow dates after a given date
 
-#### format
+#### dateFormat
 Format for the date to be displayed and stored as. See moment.js for formatting.
 > Default: DD/MM/YYYY
 
