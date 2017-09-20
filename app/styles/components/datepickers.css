@@ -4,6 +4,14 @@ body.date-open {
 	}
 }
 
+.help-text {
+	margin-top: 16px;
+
+	&.error {
+		color: #D40922;
+	}
+}
+
 .rdatez {
 	position: relative;
 	display: inline-block;
@@ -89,7 +97,9 @@ body.date-open {
 			}
 
 			& .rdatez-calendar > div {
-				margin-right: 16px;
+				&:first-child {
+					margin-right: 16px;
+				}
 
 				@media (width < 769px) {
 					margin: 0 0 16px;

@@ -59,7 +59,7 @@ class Home extends Component {
 
                     <div className="form-group m-b-3">
                         <label htmlFor="exampleDate5" className="m-b-1">Disallow Dates Outside of Range</label>
-                        <Field name="exampleDate6" component={ReduxReactDatez} displayCalendars={2} startDate={moment().add(4, 'days').format()} endDate={moment().add(12, 'days').format()} position="center" />
+                        <Field name="exampleDate6" component={ReduxReactDatez} displayCalendars={2} startDate={moment().subtract(100, 'days').format()} endDate={moment().add(12, 'days').format()} position="center" />
                     </div>
 
                     <div className="form-group m-b-3">
@@ -73,6 +73,13 @@ class Home extends Component {
                         <label htmlFor="dateOfBirth" className="m-b-1">Date of Birth</label>
                         <Field name="dateOfBirth" component={ReduxReactDatez} allowPast allowFuture={false} displayCalendars={2} position="center" />
                     </div>
+
+                    <div className="form-group m-b-3">
+                        <label htmlFor="exampleDate3" className="m-b-1">Format Date</label>
+                        <Field name="exampleDate3" component={ReduxReactDatez} dateFormat="YYYY-MM-DD" highlightWeekends />
+                    </div>
+
+                    <button type="submit">Submit</button>
                 </form>
             </div>
         )
@@ -82,8 +89,15 @@ class Home extends Component {
 function validate(values) {
     const errors = {}
 
-    if (!values.starDate) {
-        errors.starDate = 'Please add your property address'
+    console.log(moment().diff(moment(values.dateOfBirth), 'years'))
+    console.log(moment().diff(moment(values.dateOfBirth), 'years') >= 18)
+
+    if (!values.dateOfBirth) {
+        errors.dateOfBirth = 'Date of birth is incorrect.'
+    }
+
+    if (values.dateOfBirth && moment().diff(moment(values.dateOfBirth), 'years') <= 18) {
+        errors.dateOfBirth = 'You need to be over 18 years old.'
     }
 
     return errors

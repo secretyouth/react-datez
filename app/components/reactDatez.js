@@ -14,7 +14,8 @@ class ReactDatez extends Component {
             weekStartsOn: null,
             currentMonthYear: null,
             selectedDate: moment().startOf('day'),
-            visibleYear: moment()
+            visibleYear: moment(),
+            disabledToday: false
         }
 
         this.initialisePicker = this.initialisePicker.bind(this)
@@ -37,6 +38,7 @@ class ReactDatez extends Component {
         this.clickDay = this.clickDay.bind(this)
         this.clickMonth = this.clickMonth.bind(this)
         this.clickYear = this.clickYear.bind(this)
+        this.disabledTodayJump = this.disabledTodayJump.bind(this)
     }
 
     componentDidMount() {
@@ -53,10 +55,10 @@ class ReactDatez extends Component {
         const input = this.props.input || {}
 
         this.setState({
-            selectedDate: (input.value && moment(input.value, this.props.format).isValid()) ? moment(input.value, this.props.format) : '',
+            selectedDate: (input.value && moment(input.value, this.props.dateFormat).isValid()) ? moment(input.value, this.props.dateFormat) : '',
             datePickerInputHeight: `${this.dateInput.clientHeight}px`,
             weekStartsOn: moment(`1 ${this.state.currentMonthYear}`, 'D M YYYY').day(),
-            currentMonthYear: (input.value && moment(input.value, this.props.format).isValid()) ? moment(input.value, this.props.format).format('M YYYY') : moment().format('M YYYY')
+            currentMonthYear: (input.value && moment(input.value, this.props.dateFormat).isValid()) ? moment(input.value, this.props.dateFormat).format('M YYYY') : moment().format('M YYYY')
         })
     }
 
@@ -113,7 +115,7 @@ class ReactDatez extends Component {
     }
 
     selectedDate(date) {
-        if (moment(this.state.selectedDate, this.props.format).diff(moment(date, this.props.format), 'days') === 0) {
+        if (moment(this.state.selectedDate, this.props.dateFormat).diff(moment(date, this.props.dateFormat), 'days') === 0) {
             return true
         }
 
@@ -121,7 +123,7 @@ class ReactDatez extends Component {
     }
 
     isPast(date) {
-        if (moment().startOf('day').diff(moment(date, this.props.format), 'days') > 0) {
+        if (moment().startOf('day').diff(moment(date, this.props.dateFormat), 'days') > 0) {
             return true
         }
 
@@ -129,7 +131,7 @@ class ReactDatez extends Component {
     }
 
     isFuture(date) {
-        if (moment().startOf('day').diff(moment(date, this.props.format), 'days') < 0) {
+        if (moment().startOf('day').diff(moment(date, this.props.dateFormat), 'days') < 0) {
             return true
         }
 
@@ -137,7 +139,7 @@ class ReactDatez extends Component {
     }
 
     isBeforeStartDate(date) {
-        if (moment(this.props.endDate).diff(moment(date, this.props.format)) < 0) {
+        if (moment(this.props.endDate).diff(moment(date, this.props.dateFormat)) < 0) {
             return true
         }
 
@@ -145,7 +147,7 @@ class ReactDatez extends Component {
     }
 
     isAfterEndDate(date) {
-        if (moment(this.props.startDate).diff(moment(date, this.props.format)) > 0) {
+        if (moment(this.props.startDate).diff(moment(date, this.props.dateFormat)) > 0) {
             return true
         }
 
@@ -158,6 +160,9 @@ class ReactDatez extends Component {
         this.setState({
             datePickerOpen: true
         })
+
+        // Disabled todayJump
+        this.disabledTodayJump()
     }
 
     closePicker() {
@@ -166,6 +171,16 @@ class ReactDatez extends Component {
         this.setState({
             datePickerOpen: false
         })
+    }
+
+    disabledTodayJump() {
+        // If today is outside of the start and endDate range disable the today jump.
+        console.log(this.props.startDate)
+        if ((this.props.startDate && this.isBeforeStartDate(moment())) || (this.props.endDate && this.isAfterEndDate(moment()))) {
+            this.setState({
+                disabledToday: true
+            })
+        }
     }
 
     toggleYearJump() {
@@ -179,10 +194,12 @@ class ReactDatez extends Component {
     jumpToToday(e) {
         e.preventDefault()
 
-        const date = (!this.props.allowFuture) ? moment().format(this.props.format) : moment().format(this.props.format)
+        const date = (!this.props.allowFuture) ? moment().format(this.props.dateFormat) : moment().format(this.props.dateFormat)
+
+        // console.log(date)
 
         // catch the date range
-        if (this.isBeforeStartDate(date) || this.isAfterEndDate(date)) {
+        if ((this.props.startDate && this.isBeforeStartDate(date)) || (this.props.endDate && this.isAfterEndDate(date))) {
             return false
         }
 
@@ -194,7 +211,8 @@ class ReactDatez extends Component {
         })
 
         if (this.props.input) {
-            this.props.input.onChange(moment(date, this.props.format))
+            console.log('date', date)
+            this.props.input.onChange(moment(date, this.props.dateFormat))
         }
 
         return true
@@ -252,9 +270,9 @@ class ReactDatez extends Component {
         })
 
         if (this.props.input) {
-            this.props.input.onChange(moment(date, this.props.format).format())
+            this.props.input.onChange(moment(date, this.props.dateFormat).format())
         } else {
-            this.props.handleChange(moment(date, this.props.format).format())
+            this.props.handleChange(moment(date, this.props.dateFormat).format())
         }
 
         return this.closePicker()
@@ -290,16 +308,16 @@ class ReactDatez extends Component {
 
         for (let i = 1; i <= daysInMonth; i += 1) {
             const day = date.date(i)
-            const dayDate = day.format(this.props.format)
+            const dayDate = day.format(this.props.dateFormat)
             if (i === 1) {
                 calendar.push(<div className={`rdatez-day-spacer weekday-${day.day()}`} key={`${day.format('MY')}-spacer`} />)
             }
 
             const dayClasses = classnames(`rdatez-day weekday-${day.day()} ${day.format('M-YYYY')}-${i}`, {
-                'selected-day': this.selectedDate(day.format(this.props.format)),
-                'past-day': this.isPast(day.format(this.props.format)),
-                'before-start': this.isBeforeStartDate(day.format(this.props.format)),
-                'after-end': this.isAfterEndDate(day.format(this.props.format)),
+                'selected-day': this.selectedDate(day.format(this.props.dateFormat)),
+                'past-day': this.isPast(day.format(this.props.dateFormat)),
+                'before-start': this.isBeforeStartDate(day.format(this.props.dateFormat)),
+                'after-end': this.isAfterEndDate(day.format(this.props.dateFormat)),
                 today: moment().startOf('day').diff(day, 'days') === 0
             })
 
@@ -334,7 +352,7 @@ class ReactDatez extends Component {
                         placeholder={this.props.placeholder}
                         onFocus={this.openPicker}
                         readOnly
-                        value={this.props.value && moment(this.props.value, 'YYYY-MM-DD').format(this.props.format)}
+                        value={this.props.value && moment(this.props.value, 'YYYY-MM-DD').format(this.props.dateFormat)}
                         ref={(element) => {
                             this.dateInput = element
                         }}
@@ -344,7 +362,7 @@ class ReactDatez extends Component {
                         placeholder={this.props.placeholder}
                         onFocus={this.openPicker}
                         readOnly
-                        value={input.value && moment(input.value, 'YYYY-MM-DD').format(this.props.format)}
+                        value={input.value && moment(input.value, 'YYYY-MM-DD').format(this.props.dateFormat)}
                         ref={(element) => {
                             this.dateInput = element
                         }}
@@ -379,13 +397,13 @@ class ReactDatez extends Component {
                                     <path d="M24.8535,18.1465a.5.5,0,0,0-.707,0L19,23.293V4.5a.5.5,0,0,0-1,0V23.293l-5.1465-5.1465a.5.5,0,0,0-.707.707l6,6a.5.5,0,0,0,.707,0l6-6A.5.5,0,0,0,24.8535,18.1465Z" />
                                 </svg>
                             </button> }
-                            <button type="button" className="rdatez-btn rdatez-btn-today" onClick={e => this.jumpToToday(e)}>
+                            { !this.state.disabledToday && <button type="button" className="rdatez-btn rdatez-btn-today" onClick={e => this.jumpToToday(e)}>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
                                     <path d="M24,3H19V1.5a.5.5,0,0,0-1,0V3H7V1.5a.5.5,0,0,0-1,0V3H1A1,1,0,0,0,0,4V24a1,1,0,0,0,1,1H24a1,1,0,0,0,1-1V4A1,1,0,0,0,24,3Zm0,21H1V9H24ZM24,8H1V4H24Z" />
                                     <path d="M12.5,22A5.5,5.5,0,1,0,7,16.5,5.5,5.5,0,0,0,12.5,22Zm0-10A4.5,4.5,0,1,1,8,16.5,4.5,4.5,0,0,1,12.5,12Z" />
                                     <path d="M14.2,18.9a.5.5,0,1,0,.6-.8L13,16.75V14.5a.5.5,0,0,0-1,0V17a.5.5,0,0,0,.2.4Z" />
                                 </svg>
-                            </button>
+                            </button> }
                         </header>
                         <div className="rdatez-calendar">
                             { this.initialiseCalendar() }
@@ -404,7 +422,7 @@ class ReactDatez extends Component {
 }
 
 ReactDatez.defaultProps = {
-    format: 'DD/MM/YYYY',
+    dateFormat: 'DD/MM/YYYY',
     displayCalendars: 1,
     highlightWeekends: false,
     allowPast: false,
@@ -425,7 +443,7 @@ ReactDatez.propTypes = {
     startDate: PropTypes.string,
     endDate: PropTypes.string,
     position: PropTypes.oneOf(['center', 'left', 'right']),
-    format: PropTypes.string,
+    dateFormat: PropTypes.string,
     yearJump: PropTypes.bool,
     placeholder: PropTypes.string
 }

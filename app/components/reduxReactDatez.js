@@ -10,16 +10,16 @@ class ReduxReactDatez extends Component {
         this.state = {}
     }
     render() {
-        const { meta: { touched, error } } = this.props
+        const { meta: { dirty, error } } = this.props
 
         const showError = classnames('rdatez', {
-            error: touched && error
+            error: dirty && error
         })
 
         return (
             <div className={showError}>
                 <ReactDatez {...this.props} isRedux />
-                {touched && error && <div className="help-text error">{error}</div>}
+                {dirty && error && <div className="help-text error">{error}</div>}
             </div>
         )
     }
