@@ -89,9 +89,6 @@ class Home extends Component {
 function validate(values) {
     const errors = {}
 
-    console.log(moment().diff(moment(values.dateOfBirth), 'years'))
-    console.log(moment().diff(moment(values.dateOfBirth), 'years') >= 18)
-
     if (!values.dateOfBirth) {
         errors.dateOfBirth = 'Date of birth is incorrect.'
     }

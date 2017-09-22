@@ -175,7 +175,6 @@ class ReactDatez extends Component {
 
     disabledTodayJump() {
         // If today is outside of the start and endDate range disable the today jump.
-        console.log(this.props.startDate)
         if ((this.props.startDate && this.isBeforeStartDate(moment())) || (this.props.endDate && this.isAfterEndDate(moment()))) {
             this.setState({
                 disabledToday: true
@@ -196,8 +195,6 @@ class ReactDatez extends Component {
 
         const date = (!this.props.allowFuture) ? moment().format(this.props.dateFormat) : moment().format(this.props.dateFormat)
 
-        // console.log(date)
-
         // catch the date range
         if ((this.props.startDate && this.isBeforeStartDate(date)) || (this.props.endDate && this.isAfterEndDate(date))) {
             return false
@@ -211,7 +208,6 @@ class ReactDatez extends Component {
         })
 
         if (this.props.input) {
-            console.log('date', date)
             this.props.input.onChange(moment(date, this.props.dateFormat))
         }
 
