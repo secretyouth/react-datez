@@ -57,7 +57,8 @@ ReactDatez.propTypes = {
     endDate: PropTypes.instanceOf(Date),
     dateFormat: PropTypes.string,
     yearJump: PropTypes.bool,
-    placeholder: PropTypes.string
+    placeholder: PropTypes.string,
+    defaultMonth: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
 }
 ```
 #### input
@@ -106,6 +107,9 @@ Positioning of the popup, 'left', 'center', 'right'
 #### placeholder
 Add a placeholder in the input fields
 > Default: ''
+
+#### defaultMonth
+Default month when there is no input value. Can be moment object or a moment formatted string.
 
 
 ---
