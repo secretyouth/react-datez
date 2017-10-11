@@ -47,18 +47,41 @@ class ReactDatez extends Component {
         document.addEventListener('mousedown', this.handleClickEvent)
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.defaultMonth !== this.props.defaultMonth) {
+            const currentMonthYear = this.getCurrentMonthYear(nextProps)
+            this.setState({
+                currentMonthYear,
+                weekStartsOn: moment(`1 ${currentMonthYear}`, 'D M YYYY').day()
+            })
+        }
+    }
+
     componentWillUnmount() {
         document.removeEventListener('mousedown', this.handleClickEvent)
+    }
+
+    getCurrentMonthYear(props) {
+        let currentMonthYear = moment()
+        if (props.input.value && moment(props.input.value, props.dateFormat).isValid()) {
+            currentMonthYear = moment(props.input.value, props.dateFormat)
+        } else if (props.defaultMonth) {
+            currentMonthYear = moment(props.defaultMonth)
+        }
+
+        return currentMonthYear.format('M YYYY')
     }
 
     initialisePicker() {
         const input = this.props.input || {}
 
+        const currentMonthYear = this.getCurrentMonthYear(this.props)
+
         this.setState({
             selectedDate: (input.value && moment(input.value, this.props.dateFormat).isValid()) ? moment(input.value, this.props.dateFormat) : '',
             datePickerInputHeight: `${this.dateInput.clientHeight}px`,
-            weekStartsOn: moment(`1 ${this.state.currentMonthYear}`, 'D M YYYY').day(),
-            currentMonthYear: (input.value && moment(input.value, this.props.dateFormat).isValid()) ? moment(input.value, this.props.dateFormat).format('M YYYY') : moment().format('M YYYY')
+            weekStartsOn: moment(`1 ${currentMonthYear}`, 'D M YYYY').day(),
+            currentMonthYear
         })
     }
 
@@ -441,7 +464,8 @@ ReactDatez.propTypes = {
     position: PropTypes.oneOf(['center', 'left', 'right']),
     dateFormat: PropTypes.string,
     yearJump: PropTypes.bool,
-    placeholder: PropTypes.string
+    placeholder: PropTypes.string,
+    defaultMonth: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
 }
 
 export default ReactDatez
