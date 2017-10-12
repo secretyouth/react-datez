@@ -126,13 +126,7 @@ class ReactDatez extends Component {
             <div key={`calendar-${i}`}>
                 <header className="rdatez-calendar-title" key={`month-header-${i}`}>{ moment(this.state.currentMonthYear, 'M YYYY').add(i, 'months').format('MMMM YYYY') }</header>
                 <section className="rdatez-daysofweek">
-                    <span>M</span>
-                    <span>T</span>
-                    <span>W</span>
-                    <span>T</span>
-                    <span>F</span>
-                    <span>S</span>
-                    <span>S</span>
+                    {moment.weekdaysMin().map(d => <span>{d}</span>)}
                 </section>
                 { this.renderCalendar(i) }
             </div>
