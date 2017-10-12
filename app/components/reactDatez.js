@@ -5,7 +5,9 @@ import classnames from 'classnames'
 class ReactDatez extends Component {
     constructor(props) {
         super(props)
-
+        if (props.locale !== 'en') {
+            moment.locale(props.locale)
+        }
         this.state = {
             datePickerOpen: false,
             monthSelectOpen: false,
@@ -63,7 +65,7 @@ class ReactDatez extends Component {
 
     getCurrentMonthYear(props) {
         let currentMonthYear = moment()
-        if (props.input.value && moment(props.input.value, props.dateFormat).isValid()) {
+        if (props.input && props.input.value && moment(props.input.value, props.dateFormat).isValid()) {
             currentMonthYear = moment(props.input.value, props.dateFormat)
         } else if (props.defaultMonth) {
             currentMonthYear = moment(props.defaultMonth)
@@ -447,7 +449,8 @@ ReactDatez.defaultProps = {
     allowPast: false,
     allowFuture: true,
     yearJump: true,
-    position: 'left'
+    position: 'left',
+    locale: 'en'
 }
 
 ReactDatez.propTypes = {
@@ -465,7 +468,8 @@ ReactDatez.propTypes = {
     dateFormat: PropTypes.string,
     yearJump: PropTypes.bool,
     placeholder: PropTypes.string,
-    defaultMonth: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+    defaultMonth: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    locale: PropTypes.string
 }
 
 export default ReactDatez
