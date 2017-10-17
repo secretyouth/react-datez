@@ -4,7 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
     entry: {
-        app: ['babel-polyfill', './app/react-datez.js']
+        app: ['./app/react-datez.js']
     },
     output: {
         filename: 'js/react-datez.js',
