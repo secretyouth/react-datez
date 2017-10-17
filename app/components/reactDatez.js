@@ -63,7 +63,7 @@ class ReactDatez extends Component {
 
     getCurrentMonthYear(props) {
         let currentMonthYear = moment()
-        if (props.input.value && moment(props.input.value, props.dateFormat).isValid()) {
+        if ((props.input && props.input.value) && moment(props.input.value, props.dateFormat).isValid()) {
             currentMonthYear = moment(props.input.value, props.dateFormat)
         } else if (props.defaultMonth) {
             currentMonthYear = moment(props.defaultMonth)
