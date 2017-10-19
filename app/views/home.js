@@ -58,13 +58,13 @@ class Home extends Component {
                     </div>
 
                     <div className="form-group m-b-3">
-                        <label htmlFor="exampleDate5" className="m-b-1">Disallow Dates Outside of Range</label>
+                        <label htmlFor="exampleDate6" className="m-b-1">Disallow Dates Outside of Range</label>
                         <Field name="exampleDate6" component={ReduxReactDatez} displayCalendars={2} startDate={moment().subtract(100, 'days').format()} endDate={moment().add(12, 'days').format()} position="center" />
                     </div>
 
                     <div className="form-group m-b-3">
-                        <label htmlFor="exampleDate6" className="m-b-1">Disallow Year Jump</label>
-                        <Field name="exampleDate8" component={ReduxReactDatez} yearJump={false} />
+                        <label htmlFor="exampleDate7" className="m-b-1">Disallow Year Jump</label>
+                        <Field name="exampleDate7" component={ReduxReactDatez} yearJump={false} />
                     </div>
 
                     <hr />
@@ -75,8 +75,8 @@ class Home extends Component {
                     </div>
 
                     <div className="form-group m-b-3">
-                        <label htmlFor="exampleDate3" className="m-b-1">Format Date</label>
-                        <Field name="exampleDate3" component={ReduxReactDatez} dateFormat="YYYY-MM-DD" highlightWeekends />
+                        <label htmlFor="exampleDate8" className="m-b-1">Format Date</label>
+                        <Field name="exampleDate8" component={ReduxReactDatez} dateFormat="YYYY-MM-DD" highlightWeekends />
                     </div>
 
                     <button type="submit">Submit</button>

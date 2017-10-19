@@ -116,7 +116,7 @@ Add a placeholder in the input fields
 Default month when there is no input value. Can be moment object or a moment formatted string.
 
 #### locale
-Change moment locale
+Change moment locale - This will change the all moment dates to be the locale.
 > Default: 'en'
 
 #### yearButton
