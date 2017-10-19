@@ -19,10 +19,10 @@
 * Popup position
 * Year & month jumping
 * Custom date formatting
+* Localization
 
 ### Roadmap
 * Multi browser support
-* Localization
 * Time Picker
 * Blockout days
 * Location support
@@ -50,15 +50,19 @@ ReactDatez.propTypes = {
     handleChange: PropTypes.func,
     value: PropTypes.string,
     displayCalendars: PropTypes.number,
+    isRedux: PropTypes.bool,
     highlightWeekends: PropTypes.bool,
     allowPast: PropTypes.bool,
+    allowFuture: PropTypes.bool,
+    startDate: PropTypes.string,
+    endDate: PropTypes.string,
     position: PropTypes.oneOf(['center', 'left', 'right']),
-    startDate: PropTypes.instanceOf(Date),
-    endDate: PropTypes.instanceOf(Date),
     dateFormat: PropTypes.string,
     yearJump: PropTypes.bool,
     placeholder: PropTypes.string,
-    defaultMonth: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+    defaultMonth: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    locale: PropTypes.string,
+    yearButton: PropTypes.node
 }
 ```
 #### input
@@ -111,6 +115,12 @@ Add a placeholder in the input fields
 #### defaultMonth
 Default month when there is no input value. Can be moment object or a moment formatted string.
 
+#### locale
+Change moment locale
+> Default: 'en'
+
+#### yearButton
+Change year select button with custom element
 
 ---
 

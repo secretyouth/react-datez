@@ -41,6 +41,10 @@ class ReactDatez extends Component {
         this.disabledTodayJump = this.disabledTodayJump.bind(this)
     }
 
+    componentWillMount() {
+        if (this.props.locale !== 'en') moment.locale(this.props.locale)
+    }
+
     componentDidMount() {
         this.initialisePicker()
 
@@ -124,13 +128,7 @@ class ReactDatez extends Component {
             <div key={`calendar-${i}`}>
                 <header className="rdatez-calendar-title" key={`month-header-${i}`}>{ moment(this.state.currentMonthYear, 'M YYYY').add(i, 'months').format('MMMM YYYY') }</header>
                 <section className="rdatez-daysofweek">
-                    <span>M</span>
-                    <span>T</span>
-                    <span>W</span>
-                    <span>T</span>
-                    <span>F</span>
-                    <span>S</span>
-                    <span>S</span>
+                    {moment.weekdaysMin().map(d => <span>{d}</span>)}
                 </section>
                 { this.renderCalendar(i) }
             </div>
@@ -411,10 +409,10 @@ class ReactDatez extends Component {
                                 </svg>
                             </button>
                             { this.props.yearJump && <button type="button" className="rdatez-btn rdatez-btn-year" onClick={this.toggleYearJump}>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
+                                {this.props.yearButton ? this.props.yearButton : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
                                     <path d="M12.8535,6.8535a.5.5,0,0,0,0-.707l-6-6a.5.5,0,0,0-.707,0l-6,6a.5.5,0,0,0,.707.707L6,1.707V20.5a.5.5,0,0,0,1,0V1.707l5.1465,5.1465A.5.5,0,0,0,12.8535,6.8535Z" />
                                     <path d="M24.8535,18.1465a.5.5,0,0,0-.707,0L19,23.293V4.5a.5.5,0,0,0-1,0V23.293l-5.1465-5.1465a.5.5,0,0,0-.707.707l6,6a.5.5,0,0,0,.707,0l6-6A.5.5,0,0,0,24.8535,18.1465Z" />
-                                </svg>
+                                </svg>}
                             </button> }
                             { !this.state.disabledToday && <button type="button" className="rdatez-btn rdatez-btn-today" onClick={e => this.jumpToToday(e)}>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
@@ -447,7 +445,8 @@ ReactDatez.defaultProps = {
     allowPast: false,
     allowFuture: true,
     yearJump: true,
-    position: 'left'
+    position: 'left',
+    locale: 'en'
 }
 
 ReactDatez.propTypes = {
@@ -465,7 +464,9 @@ ReactDatez.propTypes = {
     dateFormat: PropTypes.string,
     yearJump: PropTypes.bool,
     placeholder: PropTypes.string,
-    defaultMonth: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+    defaultMonth: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    locale: PropTypes.string,
+    yearButton: PropTypes.node
 }
 
 export default ReactDatez
