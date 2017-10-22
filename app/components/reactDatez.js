@@ -124,11 +124,15 @@ class ReactDatez extends Component {
             }
         }
 
+        // Days of the week, start on Monday
+        const days = moment.weekdaysMin()
+        days.push(days.shift())
+
         return calendar.map(i => (
             <div key={`calendar-${i}`}>
                 <header className="rdatez-calendar-title" key={`month-header-${i}`}>{ moment(this.state.currentMonthYear, 'M YYYY').add(i, 'months').format('MMMM YYYY') }</header>
                 <section className="rdatez-daysofweek">
-                    {moment.weekdaysMin().map(d => <span>{d}</span>)}
+                    { days.map((d, index) => <span key={index}>{d}</span>) }
                 </section>
                 { this.renderCalendar(i) }
             </div>
