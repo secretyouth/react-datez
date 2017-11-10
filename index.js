@@ -1,4 +1,4 @@
-const rdatez = require('./dist/js/react-datez.js')
+var rdatez = require('./dist/js/react-datez.js')
 
 module.exports = {
     ReactDatez: rdatez.ReactDatez,
