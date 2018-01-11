@@ -48,7 +48,10 @@ class ReactDatez extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.locale !== 'en') moment.locale(nextProps.locale)
+        if (nextProps.locale !== 'en') {
+            moment.locale(nextProps.locale)
+            this.initialisePicker();
+        }
         if (nextProps.defaultMonth !== this.props.defaultMonth) {
             const currentMonthYear = this.getCurrentMonthYear(nextProps)
             this.setState({
