@@ -388,7 +388,7 @@ class ReactDatez extends Component {
                             this.dateInput = element
                         }}
                     /> }
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" className="cal-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" onClick={this.openPicker} className="cal-icon">
                     <g id="budicon-calendar">
                         <path d="M24,2H19V.5a.5.5,0,0,0-1,0V2H7V.5a.5.5,0,0,0-1,0V2H1A1,1,0,0,0,0,3V23a1,1,0,0,0,1,1H24a1,1,0,0,0,1-1V3A1,1,0,0,0,24,2Zm0,21H1V8H24ZM24,7H1V3H24Z" />
                     </g>
