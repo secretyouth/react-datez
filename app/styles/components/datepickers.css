@@ -47,6 +47,9 @@ body.date-open {
 		width: 18px;
 		height: 18px;
 		fill: #3E3E3E;
+		&:hover {
+			cursor: pointer;
+		}
 	}
 
 	&-right &-picker {
