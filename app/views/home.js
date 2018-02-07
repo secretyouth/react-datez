@@ -9,7 +9,8 @@ class Home extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            dateInput: ''
+            dateInput: '',
+            language: 'en'
         }
         this.nextStep = this.nextStep.bind(this)
         this.handleChange = this.handleChange.bind(this)
@@ -33,13 +34,23 @@ class Home extends Component {
 
                 <form onSubmit={this.props.handleSubmit(this.nextStep)}>
                     <div className="form-group m-b-3">
-                        <label htmlFor="exampleDate1" className="m-b-1">Standard Date Picker</label>
+                        <label htmlFor="language" className="m-b-1">Language</label>
+                        <select name="language" onChange={(e) => this.setState({language: e.target.value})}>
+                            <option value="en">en</option>
+                            <option value="de">de</option>
+                            <option value="ru">ru</option>
+                            <option value="tr">tr</option>
+                        </select>
+                    </div>
+
+                    <div className="form-group m-b-3">
+                        <label htmlFor="exampleDate1" className="m-b-1">Standard Date Picker (Localized) </label>
                         <Field name="exampleDate1" component={ReduxReactDatez} />
                     </div>
 
                     <div className="form-group m-b-3">
                         <label htmlFor="exampleDate2" className="m-b-1">Multi-calendar Picker (Non Redux)</label>
-                        <ReactDatez name="dateInput" handleChange={this.handleChange} value={this.state.dateInput} displayCalendars={2} placeholder="Multi-calendar" />
+                        <ReactDatez name="dateInput" locale={this.state.language} handleChange={this.handleChange} value={this.state.dateInput} displayCalendars={2} placeholder="Multi-calendar" />
                     </div>
 
                     <div className="form-group m-b-3">

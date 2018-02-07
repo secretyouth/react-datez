@@ -41,10 +41,6 @@ class ReactDatez extends Component {
         this.disabledTodayJump = this.disabledTodayJump.bind(this)
     }
 
-    componentWillMount() {
-        if (this.props.locale !== 'en') moment.locale(this.props.locale)
-    }
-
     componentDidMount() {
         this.initialisePicker()
 
@@ -52,6 +48,10 @@ class ReactDatez extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (nextProps.locale !== 'en') {
+            moment.locale(nextProps.locale)
+            this.initialisePicker();
+        }
         if (nextProps.defaultMonth !== this.props.defaultMonth) {
             const currentMonthYear = this.getCurrentMonthYear(nextProps)
             this.setState({
