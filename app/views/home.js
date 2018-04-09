@@ -9,10 +9,19 @@ class Home extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            dateInput: ''
+            dateInput: '',
+            dateInputDisableIcon: '',
+            dateInputExtraClass: '',
+            dateInputExtraStyleWrapper: '',
+            dateInputExtraStyleInput: ''
         }
+
         this.nextStep = this.nextStep.bind(this)
         this.handleChange = this.handleChange.bind(this)
+        this.handleChangeDisableIcon = this.handleChangeDisableIcon.bind(this)
+        this.handleChangeExtraClass = this.handleChangeExtraClass.bind(this)
+        this.handleChangeExtraStyleWrapper = this.handleChangeExtraStyleWrapper.bind(this)
+        this.handleChangeExtraStyleInput = this.handleChangeExtraStyleInput.bind(this)
     }
 
     nextStep(form) {
@@ -22,6 +31,26 @@ class Home extends Component {
     handleChange(value) {
         console.log('Non redux input change', value)
         this.setState({ dateInput: value })
+    }
+
+    handleChangeDisableIcon(value) {
+        console.log('Input change on disable icon', value)
+        this.setState({ dateInputDisableIcon: value })
+    }
+
+    handleChangeExtraClass(value) {
+        console.log('Non redux input change for Additional class', value)
+        this.setState({ dateInputExtraClass: value })
+    }
+
+    handleChangeExtraStyleWrapper(value) {
+        console.log('Input change for wrapped style', value)
+        this.setState({ dateInputExtraStyleWrapper: value })
+    }
+
+    handleChangeExtraStyleInput(value) {
+        console.log('Input changed for input element style', value)
+        this.setState({ dateInputExtraStyleInput: value })
     }
 
     render() {
@@ -40,6 +69,26 @@ class Home extends Component {
                     <div className="form-group m-b-3">
                         <label htmlFor="exampleDate2" className="m-b-1">Multi-calendar Picker (Non Redux)</label>
                         <ReactDatez name="dateInput" handleChange={this.handleChange} value={this.state.dateInput} displayCalendars={2} placeholder="Multi-calendar" />
+                    </div>
+
+                    <div className="form-group m-b-3">
+                        <label htmlFor="exampleDateExtraClass" className="m-b-1">Extra Class (Non Redux). <small>Inspect the element on console to see the added class</small></label>
+                        <ReactDatez className="my-extra-base-class hello" inputClassName="my-extra-input-class" name="dateInputExtraClass" handleChange={this.handleChangeExtraClass} value={this.state.dateInputExtraClass} />
+                    </div>
+
+                    <div className="form-group m-b-3">
+                        <label htmlFor="exampleDateExtraClass" className="m-b-1">Disable Input Icon</label>
+                        <ReactDatez disableInputIcon handleChange={this.handleChangeDisableIcon} value={this.state.dateInputDisableIcon} />
+                    </div>
+
+                    <div className="form-group m-b-3">
+                        <label htmlFor="exampleDateExtraStyleWrapper" className="m-b-1">Custom Style for wrapper <small>Inspect the element on see style</small></label>
+                        <ReactDatez style={{ fontSize: '30px' }} handleChange={this.handleChangeExtraStyleWrapper} value={this.state.dateInputExtraStyleWrapper} />
+                    </div>
+
+                    <div className="form-group m-b-3">
+                        <label htmlFor="exampleDateExtraClass" className="m-b-1">Custom Style for input <small>Select date to see magic</small></label>
+                        <ReactDatez inputStyle={{ color: 'blue' }} handleChange={this.handleChangeExtraStyleInput} value={this.state.dateInputExtraStyleInput} />
                     </div>
 
                     <div className="form-group m-b-3">
