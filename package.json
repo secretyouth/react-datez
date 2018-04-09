@@ -10,7 +10,8 @@
     "dev": "npm run start",
     "dev:remote": "webpack-dev-server --progress --history-api-fallback --hot --inline --host 0.0.0.0 --port 9000 --open",
     "clean": "rimraf ./dist && mkdir dist",
-    "lint": "eslint ./app"
+    "lint": "eslint ./app",
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",
