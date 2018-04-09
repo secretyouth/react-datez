@@ -47,6 +47,9 @@ Than import into your components
 ```
 ReactDatez.propTypes = {
     input: PropTypes.object,
+    className: PropTypes.object,
+    inputClassName: PropTypes.object,
+    disableInputIcon: PropTypes.bool,
     handleChange: PropTypes.func,
     value: PropTypes.string,
     displayCalendars: PropTypes.number,
@@ -67,6 +70,16 @@ ReactDatez.propTypes = {
 ```
 #### input
 Passed through by redux `<Field />` component. Meta is also automatically added to this component to display errors.
+
+#### className
+Add additional classes to the wrapper div element
+
+#### inputClassName
+Add additional classes to the main input element
+
+#### disableInputIcon
+Disable the calender icon on input
+> Default: false
 
 #### handleChange
 Pass through parent onChange function. Omitted if using redux-forms - (See example stand-alone picker).

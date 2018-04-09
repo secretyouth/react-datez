@@ -23,9 +23,9 @@
   },
   "dependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-polyfill": "^6.23.0",
     "classnames": "^2.2.5",
     "express": "4.14.1",
-    "babel-polyfill": "^6.23.0",
     "moment": "^2.18.1",
     "normalize.css": "^5.0.0",
     "react": "15.4.2",

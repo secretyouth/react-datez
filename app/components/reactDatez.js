@@ -351,10 +351,12 @@ class ReactDatez extends Component {
     render() {
         const input = this.props.input || {}
 
-        const rdatezClass = classnames('rdatez', {
+        const rdatezClass = classnames('rdatez', this.props.className, {
             'rdatez-centered': this.props.position === 'center',
             'rdatez-right': this.props.position === 'right'
         })
+
+        const rdatezInputClass = classnames(this.props.inputClassName)
 
         const pickerClass = classnames('rdatez-picker', {
             'multi-cal': (this.props.displayCalendars > 1),
@@ -369,6 +371,7 @@ class ReactDatez extends Component {
             <div className={rdatezClass} ref={(element) => { this.rdatez = element }} >
                 {!this.props.isRedux ?
                     <input
+                        className={rdatezInputClass}
                         onClick={this.openPicker}
                         placeholder={this.props.placeholder}
                         onFocus={this.openPicker}
@@ -379,6 +382,7 @@ class ReactDatez extends Component {
                         }}
                     /> :
                     <input
+                        className={rdatezInputClass}
                         onClick={this.openPicker}
                         placeholder={this.props.placeholder}
                         onFocus={this.openPicker}
@@ -388,11 +392,13 @@ class ReactDatez extends Component {
                             this.dateInput = element
                         }}
                     /> }
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" onClick={this.openPicker} className="cal-icon">
-                    <g id="budicon-calendar">
-                        <path d="M24,2H19V.5a.5.5,0,0,0-1,0V2H7V.5a.5.5,0,0,0-1,0V2H1A1,1,0,0,0,0,3V23a1,1,0,0,0,1,1H24a1,1,0,0,0,1-1V3A1,1,0,0,0,24,2Zm0,21H1V8H24ZM24,7H1V3H24Z" />
-                    </g>
-                </svg>
+                {!this.props.disableInputIcon ?
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" onClick={this.openPicker} className="cal-icon">
+                        <g id="budicon-calendar">
+                            <path d="M24,2H19V.5a.5.5,0,0,0-1,0V2H7V.5a.5.5,0,0,0-1,0V2H1A1,1,0,0,0,0,3V23a1,1,0,0,0,1,1H24a1,1,0,0,0,1-1V3A1,1,0,0,0,24,2Zm0,21H1V8H24ZM24,7H1V3H24Z" />
+                        </g>
+                    </svg> : null
+                }
                 { this.state.datePickerOpen && <div className={pickerClass} style={{ top: this.state.datePickerInputHeight }}>
                     <div>
                         <header className="rdatez-header">
@@ -443,6 +449,7 @@ class ReactDatez extends Component {
 }
 
 ReactDatez.defaultProps = {
+    disableInputIcon: false,
     dateFormat: 'DD/MM/YYYY',
     displayCalendars: 1,
     highlightWeekends: false,
@@ -455,6 +462,9 @@ ReactDatez.defaultProps = {
 
 ReactDatez.propTypes = {
     input: PropTypes.object,
+    className: PropTypes.object,
+    inputClassName: PropTypes.object,
+    disableInputIcon: PropTypes.bool,
     handleChange: PropTypes.func,
     value: PropTypes.string,
     displayCalendars: PropTypes.number,
