@@ -11,7 +11,7 @@
     "dev:remote": "webpack-dev-server --progress --history-api-fallback --hot --inline --host 0.0.0.0 --port 9000 --open",
     "clean": "rimraf ./dist && mkdir dist",
     "lint": "eslint ./app",
-    "postinstall": "npm run build"
+    "postinstall": "mkdir dist && webpack --progress -p --config webpack.production.config.js"
   },
   "repository": {
     "type": "git",
@@ -24,9 +24,9 @@
   },
   "dependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-polyfill": "^6.23.0",
     "classnames": "^2.2.5",
     "express": "4.14.1",
-    "babel-polyfill": "^6.23.0",
     "moment": "^2.18.1",
     "normalize.css": "^5.0.0",
     "react": "15.4.2",
