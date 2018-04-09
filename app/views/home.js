@@ -9,7 +9,8 @@ class Home extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            dateInput: ''
+            dateInput: '',
+            dateInputExtraClass: ''
         }
         this.nextStep = this.nextStep.bind(this)
         this.handleChange = this.handleChange.bind(this)
@@ -22,6 +23,11 @@ class Home extends Component {
     handleChange(value) {
         console.log('Non redux input change', value)
         this.setState({ dateInput: value })
+    }
+
+    handleChangeExtraClass(value) {
+        console.log('Non redux input change for Additional class', value)
+        this.setState({ dateInputExtraClass: value })
     }
 
     render() {
@@ -40,6 +46,16 @@ class Home extends Component {
                     <div className="form-group m-b-3">
                         <label htmlFor="exampleDate2" className="m-b-1">Multi-calendar Picker (Non Redux)</label>
                         <ReactDatez name="dateInput" handleChange={this.handleChange} value={this.state.dateInput} displayCalendars={2} placeholder="Multi-calendar" />
+                    </div>
+
+                    <div className="form-group m-b-3">
+                        <label htmlFor="exampleDateExtraClass" className="m-b-1">Extra Class (Non Redux). <small>Inspect the element on console to see the added class</small></label>
+                        <ReactDatez className="my-extra-base-class hello" inputClassName="my-extra-input-class" name="dateInputExtraClass" handleChange={this.handleChangeExtraClass} value={this.state.dateInputExtraClass} />
+                    </div>
+
+                    <div className="form-group m-b-3">
+                        <label htmlFor="exampleDateExtraClass" className="m-b-1">Disable Input Icon</label>
+                        <ReactDatez disableInputIcon={true} handleChange={this.handleChangeExtraClass} value={this.state.dateInputExtraClass} />
                     </div>
 
                     <div className="form-group m-b-3">
