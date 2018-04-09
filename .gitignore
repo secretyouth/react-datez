@@ -13,7 +13,6 @@ logs
 results
 tmp
 coverage
-dist
 
 # API keys
 .env

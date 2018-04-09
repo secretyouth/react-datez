@@ -55,7 +55,7 @@ class Home extends Component {
 
                     <div className="form-group m-b-3">
                         <label htmlFor="exampleDateExtraClass" className="m-b-1">Disable Input Icon</label>
-                        <ReactDatez disableInputIcon={true} handleChange={this.handleChangeExtraClass} value={this.state.dateInputExtraClass} />
+                        <ReactDatez handleChange={this.handleChangeExtraClass} value={this.state.dateInputExtraClass} disableInputIcon />
                     </div>
 
                     <div className="form-group m-b-3">
