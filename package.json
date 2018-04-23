@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm run lint && npm run clean && webpack --progress -p --config webpack.production.config.js",
     "start": "webpack-dev-server --progress --history-api-fallback --hot --inline --port 9001 --open",
-    "deploy": "npm run build && npm patch",
+    "deploy": "npm run build && npm version patch",
     "dev": "npm run start",
     "dev:remote": "webpack-dev-server --progress --history-api-fallback --hot --inline --host 0.0.0.0 --port 9000 --open",
     "clean": "rimraf ./dist && mkdir dist",
