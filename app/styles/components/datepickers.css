@@ -83,6 +83,9 @@ body.date-open {
 			max-width: 400px;
 			min-width: 400px;
 		}
+		&.no-cal{
+			display: none;
+		}
 
 		&.multi-cal {
 			min-width: auto;
