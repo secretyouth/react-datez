@@ -363,6 +363,7 @@ class ReactDatez extends Component {
 
         const pickerClass = classnames('rdatez-picker', {
             'multi-cal': (this.props.displayCalendars > 1),
+            'no-cal': (this.props.displayCalendars === 0),
             'highlight-weekends': this.props.highlightWeekends,
             'disallow-past': !this.props.allowPast,
             'disallow-future': !this.props.allowFuture,
