@@ -128,12 +128,14 @@ class ReactDatez extends Component {
         const days = moment.weekdaysMin()
         let dayOffset = 0
 
-        while (days[0] !== this.props.firstDayOfWeek) {
-            days.push(days.shift())
-            dayOffset += 1
-        }
+        if (days.includes(this.props.firstDayOfWeek)) {
+            dayOffset = days.indexOf(this.props.firstDayOfWeek)
+            dayOffset = (7 - Math.abs(dayOffset === 0 ? 6 : dayOffset - 1)) % 7
 
-        dayOffset = (7 - Math.abs(dayOffset === 0 ? 6 : dayOffset - 1)) % 7
+            while (days[0] !== this.props.firstDayOfWeek) {
+                days.push(days.shift())
+            }
+        }
 
         return calendar.map(i => (
             <div key={`calendar-${i}`}>
@@ -472,7 +474,7 @@ ReactDatez.defaultProps = {
     yearJump: true,
     position: 'left',
     locale: 'en',
-    firstDayOfWeek: 'Su'
+    firstDayOfWeek: 'Mo'
 }
 
 ReactDatez.propTypes = {
