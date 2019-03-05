@@ -124,9 +124,16 @@ class ReactDatez extends Component {
             }
         }
 
-        // Days of the week, start on Monday
+        // Set which day to start on
         const days = moment.weekdaysMin()
-        days.push(days.shift())
+        let dayOffset = 0
+
+        while (days[0] !== this.props.firstDayOfWeek) {
+            days.push(days.shift())
+            dayOffset += 1
+        }
+
+        dayOffset = (7 - Math.abs(dayOffset === 0 ? 6 : dayOffset - 1)) % 7
 
         return calendar.map(i => (
             <div key={`calendar-${i}`}>
@@ -134,7 +141,7 @@ class ReactDatez extends Component {
                 <section className="rdatez-daysofweek">
                     { days.map((d, index) => <span key={index}>{d}</span>) }
                 </section>
-                { this.renderCalendar(i) }
+                { this.renderCalendar({ calendarOffset: i, dayOffset }) }
             </div>
         ))
     }
@@ -321,8 +328,8 @@ class ReactDatez extends Component {
         this.toggleYearJump()
     }
 
-    renderCalendar(offset) {
-        const date = (offset) ? moment(this.state.currentMonthYear, 'M YYYY').add(offset, 'months') : moment(this.state.currentMonthYear, 'M YYYY')
+    renderCalendar({ calendarOffset, dayOffset }) {
+        const date = (calendarOffset) ? moment(this.state.currentMonthYear, 'M YYYY').add(calendarOffset, 'months') : moment(this.state.currentMonthYear, 'M YYYY')
         const daysInMonth = date.daysInMonth()
         const startsOn = date.day()
         const calendar = []
@@ -330,11 +337,12 @@ class ReactDatez extends Component {
         for (let i = 1; i <= daysInMonth; i += 1) {
             const day = date.date(i)
             const dayDate = day.format(this.props.dateFormat)
+
             if (i === 1) {
-                calendar.push(<div className={`rdatez-day-spacer weekday-${day.day()}`} key={`${day.format('MY')}-spacer`} />)
+                calendar.push(<div className={`rdatez-day-spacer weekday-${(day.day() + dayOffset) % 7}`} key={`${day.format('MY')}-spacer`} />)
             }
 
-            const dayClasses = classnames(`rdatez-day weekday-${day.day()} ${day.format('M-YYYY')}-${i}`, {
+            const dayClasses = classnames(`rdatez-day weekday-${(day.day() + dayOffset) % 7} ${day.format('M-YYYY')}-${i}`, {
                 'selected-day': this.selectedDate(day.format(this.props.dateFormat)),
                 'past-day': this.isPast(day.format(this.props.dateFormat)),
                 'before-start': this.isBeforeStartDate(day.format(this.props.dateFormat)),
@@ -345,7 +353,7 @@ class ReactDatez extends Component {
             calendar.push(<a href="" className={dayClasses} key={`${day.format('DMY')}-${i}`} onClick={e => this.clickDay(e, dayDate)} tabIndex="-1">{i}</a>)
         }
 
-        return <section className={`rdatez-month-days starts-on-${startsOn}`}>{calendar}</section>
+        return <section className={`rdatez-month-days starts-on-${(startsOn + dayOffset) % 7}`}>{calendar}</section>
     }
 
     render() {
@@ -463,7 +471,8 @@ ReactDatez.defaultProps = {
     allowFuture: true,
     yearJump: true,
     position: 'left',
-    locale: 'en'
+    locale: 'en',
+    firstDayOfWeek: 'Su'
 }
 
 ReactDatez.propTypes = {
@@ -488,7 +497,8 @@ ReactDatez.propTypes = {
     placeholder: PropTypes.string,
     defaultMonth: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     locale: PropTypes.string,
-    yearButton: PropTypes.node
+    yearButton: PropTypes.node,
+    firstDayOfWeek: PropTypes.oneOf(['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']),
 }
 
 export default ReactDatez
