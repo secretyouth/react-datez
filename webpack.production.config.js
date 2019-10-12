@@ -1,38 +1,46 @@
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+
 
 module.exports = {
     entry: {
         app: ['./app/react-datez.js']
     },
     output: {
-        filename: 'js/react-datez.js',
         path: path.resolve(__dirname, './dist'),
-        publicPath: '/',
-        libraryTarget: 'commonjs2'
+        filename: 'js/react-datez.js',
+        publicPath: '/dist',
+
     },
     module: {
         rules: [{
             test: /\.(js|jsx)$/,
             exclude: /node_modules/,
-            loader: 'babel-loader',
-            options: {
-                presets: ['react', 'es2015']
+            use: {
+                loader: 'babel-loader',
+                options: {
+                    presets: [
+                        '@babel/preset-env',
+                        '@babel/preset-react',
+                    ]
+                }
             }
-        }, {
-            test: /\.css$/,
-            use: ExtractTextPlugin.extract({
-                fallback: 'style-loader',
-                use: ['css-loader?importLoaders=1', 'postcss-loader']
-            })
-        }]
+        },
+        {
+            test: /\.s[ac]ss$/i,
+            use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+        },
+        ]
     },
     plugins: [
-        new ExtractTextPlugin('css/react-datez.css'),
+        new MiniCssExtractPlugin({
+            filename: 'css/react-datez.css',
+        }),
         new CopyWebpackPlugin([
             { from: './app/favicon.ico' },
             { from: './app/assets', to: 'assets' }
         ])
-    ]
+    ],
+
 }

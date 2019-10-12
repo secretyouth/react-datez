@@ -9,6 +9,7 @@ class ReduxReactDatez extends Component {
 
         this.state = {}
     }
+
     render() {
         const { meta: { touched, error } } = this.props
 

@@ -54,78 +54,92 @@ class Home extends Component {
     }
 
     render() {
+        const { handleSubmit } = this.props
+        const {
+            dateInput, dateInputDisableIcon, dateInputExtraStyleWrapper, dateInputExtraStyleInput, dateInputExtraClass
+        } = this.state
+
         return (
             <div className="container">
                 <img src="/assets/banner.png" alt="React Datez" />
 
                 <hr />
 
-                <form onSubmit={this.props.handleSubmit(this.nextStep)}>
+                <form onSubmit={handleSubmit(this.nextStep)}>
                     <div className="form-group m-b-3">
                         <label htmlFor="exampleDate1" className="m-b-1">Standard Date Picker</label>
-                        <Field name="exampleDate1" component={ReduxReactDatez} />
+                        <Field name="exampleDate1" id="exampleDate1" component={ReduxReactDatez} />
                     </div>
 
                     <div className="form-group m-b-3">
                         <label htmlFor="exampleDate2" className="m-b-1">Multi-calendar Picker (Non Redux)</label>
-                        <ReactDatez name="dateInput" handleChange={this.handleChange} value={this.state.dateInput} displayCalendars={2} placeholder="Multi-calendar" />
+                        <ReactDatez name="dateInput" id="exampleDate2" handleChange={this.handleChange} value={dateInput} displayCalendars={2} placeholder="Multi-calendar" />
                     </div>
 
                     <div className="form-group m-b-3">
-                        <label htmlFor="exampleDateExtraClass" className="m-b-1">Extra Class (Non Redux). <small>Inspect the element on console to see the added class</small></label>
-                        <ReactDatez className="my-extra-base-class hello" inputClassName="my-extra-input-class" name="dateInputExtraClass" handleChange={this.handleChangeExtraClass} value={this.state.dateInputExtraClass} />
+                        <label htmlFor="exampleDateExtraClass" className="m-b-1">
+                            Extra Class (Non Redux).
+                            <small>Inspect the element on console to see the added class</small>
+                        </label>
+                        <ReactDatez id="exampleDateExtraClass" className="my-extra-base-class hello" inputClassName="my-extra-input-class" name="dateInputExtraClass" handleChange={this.handleChangeExtraClass} value={dateInputExtraClass} />
                     </div>
 
                     <div className="form-group m-b-3">
                         <label htmlFor="exampleDateExtraClass" className="m-b-1">Disable Input Icon</label>
-                        <ReactDatez disableInputIcon handleChange={this.handleChangeDisableIcon} value={this.state.dateInputDisableIcon} />
+                        <ReactDatez id="exampleDateExtraClass" disableInputIcon handleChange={this.handleChangeDisableIcon} value={dateInputDisableIcon} />
                     </div>
 
                     <div className="form-group m-b-3">
-                        <label htmlFor="exampleDateExtraStyleWrapper" className="m-b-1">Custom Style for wrapper <small>Inspect the element on see style</small></label>
-                        <ReactDatez style={{ fontSize: '30px' }} handleChange={this.handleChangeExtraStyleWrapper} value={this.state.dateInputExtraStyleWrapper} />
+                        <label htmlFor="exampleDateExtraStyleWrapper" className="m-b-1">
+                            Custom Style for wrapper
+                            <small>Inspect the element on see style</small>
+                        </label>
+                        <ReactDatez id="exampleDateExtraStyleWrapper" style={{ fontSize: '30px' }} handleChange={this.handleChangeExtraStyleWrapper} value={dateInputExtraStyleWrapper} />
                     </div>
 
                     <div className="form-group m-b-3">
-                        <label htmlFor="exampleDateExtraClass" className="m-b-1">Custom Style for input <small>Select date to see magic</small></label>
-                        <ReactDatez inputStyle={{ color: 'blue' }} handleChange={this.handleChangeExtraStyleInput} value={this.state.dateInputExtraStyleInput} />
+                        <label htmlFor="exampleDateExtraClass" className="m-b-1">
+                            Custom Style for input
+                            <small>Select date to see magic</small>
+                        </label>
+                        <ReactDatez id="exampleDateExtraClass" inputStyle={{ color: 'blue' }} handleChange={this.handleChangeExtraStyleInput} value={dateInputExtraStyleInput} />
                     </div>
 
                     <div className="form-group m-b-3">
                         <label htmlFor="exampleDate3" className="m-b-1">Highlight Weekends</label>
-                        <Field name="exampleDate3" component={ReduxReactDatez} highlightWeekends />
+                        <Field name="exampleDate3" id="exampleDate3" component={ReduxReactDatez} highlightWeekends />
                     </div>
 
                     <div className="form-group m-b-3">
                         <label htmlFor="exampleDate4" className="m-b-1">Allow Past Dates</label>
-                        <Field name="exampleDate4" component={ReduxReactDatez} allowPast displayCalendars={2} position="center" />
+                        <Field name="exampleDate4" id="exampleDate4" component={ReduxReactDatez} allowPast displayCalendars={2} position="center" />
                     </div>
 
                     <div className="form-group m-b-3">
                         <label htmlFor="exampleDate5" className="m-b-1">Disallow Future Dates</label>
-                        <Field name="exampleDate5" component={ReduxReactDatez} allowPast allowFuture={false} displayCalendars={2} position="center" />
+                        <Field name="exampleDate5" id="exampleDate5" component={ReduxReactDatez} allowPast allowFuture={false} displayCalendars={2} position="center" />
                     </div>
 
                     <div className="form-group m-b-3">
                         <label htmlFor="exampleDate6" className="m-b-1">Disallow Dates Outside of Range</label>
-                        <Field name="exampleDate6" component={ReduxReactDatez} displayCalendars={2} startDate={moment().subtract(100, 'days').format()} endDate={moment().add(12, 'days').format()} position="center" />
+                        <Field name="exampleDate6" id="exampleDate6" component={ReduxReactDatez} displayCalendars={2} startDate={moment().subtract(100, 'days').format()} endDate={moment().add(12, 'days').format()} position="center" />
                     </div>
 
                     <div className="form-group m-b-3">
                         <label htmlFor="exampleDate7" className="m-b-1">Disallow Year Jump</label>
-                        <Field name="exampleDate7" component={ReduxReactDatez} yearJump={false} />
+                        <Field name="exampleDate7" id="exampleDate7" component={ReduxReactDatez} yearJump={false} />
                     </div>
 
                     <hr />
 
                     <div className="form-group m-b-3">
                         <label htmlFor="dateOfBirth" className="m-b-1">Date of Birth</label>
-                        <Field name="dateOfBirth" component={ReduxReactDatez} allowPast allowFuture={false} displayCalendars={2} position="center" />
+                        <Field name="dateOfBirth" id="dateOfBirth" component={ReduxReactDatez} allowPast allowFuture={false} displayCalendars={2} position="center" />
                     </div>
 
                     <div className="form-group m-b-3">
                         <label htmlFor="exampleDate8" className="m-b-1">Format Date</label>
-                        <Field name="exampleDate8" component={ReduxReactDatez} dateFormat="YYYY-MM-DD" highlightWeekends />
+                        <Field name="exampleDate8" id="exampleDate8" component={ReduxReactDatez} dateFormat="YYYY-MM-DD" highlightWeekends />
                     </div>
 
                     <button type="submit">Submit</button>

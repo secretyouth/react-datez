@@ -1,8 +1,10 @@
 const path = require('path')
+
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
+    mode: 'development',
     entry: {
         app: ['./app/index.js']
     },
@@ -15,20 +17,40 @@ module.exports = {
         rules: [{
             test: /\.(js|jsx)$/,
             exclude: /node_modules/,
-            loader: 'babel-loader',
-            options: {
-                presets: ['react', 'es2015']
+            use: {
+                loader: 'babel-loader',
+                options: {
+                    presets: [
+                        '@babel/preset-env',
+                        '@babel/preset-react',
+                    ]
+                }
             }
         }, {
-            test: /\.css$/,
-            loader: ['style-loader', 'css-loader?importLoaders=1', 'postcss-loader']
-        }, {
+            test: /\.css$/i,
+            use: [
+                'style-loader',
+                'css-loader',
+            ],
+        },
+        {
+            test: /\.s[ac]ss$/i,
+            use: [
+                'style-loader',
+                'css-loader',
+                'sass-loader',
+            ],
+        },
+        {
             test: /\.(png|jpg|jpeg|gif|svg)$/,
-            loader: 'file-loader?limit=8192&name=assets/[name].[ext]?[hash]'
+            use: 'file-loader?limit=8192&name=assets/[name].[ext]?[hash]'
         }, {
             test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-            loader: 'url-loader?limit=100000'
+            use: 'url-loader?limit=100000'
         }]
+    },
+    resolve: {
+        extensions: ['.js', '.scss']
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -37,7 +59,8 @@ module.exports = {
         new CopyWebpackPlugin([
             { from: './app/favicon.ico' },
             { from: './app/assets', to: 'assets' }
-        ])
+        ]),
+
     ],
-    devtool: 'eval'
+    devtool: 'inline-source-map'
 }
