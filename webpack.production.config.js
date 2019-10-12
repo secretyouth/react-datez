@@ -10,19 +10,25 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, './dist'),
         filename: 'js/react-datez.js',
-        publicPath: '/dist',
-
+        publicPath: '/',
+        libraryTarget: 'commonjs2',
     },
     module: {
         rules: [{
             test: /\.(js|jsx)$/,
             exclude: /node_modules/,
+            include: [
+                path.join(__dirname, 'app'),
+
+            ],
             use: {
                 loader: 'babel-loader',
                 options: {
                     presets: [
+
                         '@babel/preset-env',
                         '@babel/preset-react',
+
                     ]
                 }
             }

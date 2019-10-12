@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDom from 'react-dom'
 import './styles/main.scss'
-import 'normalize.css'
 import Routes from './routes'
 
 ReactDom.render(
