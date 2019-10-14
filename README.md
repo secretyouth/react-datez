@@ -4,6 +4,9 @@
 # react-datez
 #### A customizable, flexible and delicious react date picker.
 
+## Contibutors Wanted
+> Always on the lookout for people to help maintain this plugin, please submit PR's and we can make this happen!
+
 ## Example
 ![react-gif](https://user-images.githubusercontent.com/2343152/27118852-8ebe99a0-5120-11e7-843c-52f58d7dec1f.gif)
 
