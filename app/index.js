@@ -1,8 +1,6 @@
-import 'babel-polyfill'
 import React from 'react'
 import ReactDom from 'react-dom'
-import './styles/main.css'
-
+import './styles/main.scss'
 import Routes from './routes'
 
 ReactDom.render(

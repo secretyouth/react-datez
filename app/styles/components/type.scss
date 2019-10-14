@@ -1,13 +1,13 @@
 /* Typeography */
 
 h1, .h1 {
-	color: var(--base-header-font-colour);
+	color: $base-header-font-colour;
 	font-size: 2rem;
 	font-weight: 600;
 }
 
 h2, .h2 {
-	color: var(--base-header-font-colour);
+	color: $base-header-font-colour;
 	font-size: 1.5rem;
 	font-weight: 700;
 	line-height: 1.3;

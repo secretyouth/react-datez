@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unused-state */
+
 import React, { Component, PropTypes } from 'react'
 import moment from 'moment'
 import classnames from 'classnames'
@@ -42,7 +44,8 @@ class ReactDatez extends Component {
     }
 
     componentWillMount() {
-        if (this.props.locale !== 'en') moment.locale(this.props.locale)
+        const { locale } = this.props
+        if (locale !== 'en') moment.locale(locale)
     }
 
     componentDidMount() {
@@ -52,7 +55,8 @@ class ReactDatez extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.defaultMonth !== this.props.defaultMonth) {
+        const { defaultMonth } = this.props
+        if (nextProps.defaultMonth !== defaultMonth) {
             const currentMonthYear = this.getCurrentMonthYear(nextProps)
             this.setState({
                 currentMonthYear,
@@ -77,12 +81,13 @@ class ReactDatez extends Component {
     }
 
     initialisePicker() {
-        const input = this.props.input || {}
+        const { input, dateFormat } = this.props
+        const _input = input || {}
 
         const currentMonthYear = this.getCurrentMonthYear(this.props)
 
         this.setState({
-            selectedDate: (input.value && moment(input.value, this.props.dateFormat).isValid()) ? moment(input.value, this.props.dateFormat) : '',
+            selectedDate: (_input.value && moment(_input.value, dateFormat).isValid()) ? moment(_input.value, dateFormat) : '',
             datePickerInputHeight: `${this.dateInput.clientHeight}px`,
             weekStartsOn: moment(`1 ${currentMonthYear}`, 'D M YYYY').day(),
             currentMonthYear
@@ -90,16 +95,18 @@ class ReactDatez extends Component {
     }
 
     handleClickEvent(event) {
-        if (this.rdatez && !this.rdatez.contains(event.target) && this.state.datePickerOpen) {
+        const { datePickerOpen } = this.state
+        if (this.rdatez && !this.rdatez.contains(event.target) && datePickerOpen) {
             this.closePicker()
         }
     }
 
     initialiseMonthCalendar() {
         const months = []
+        const { currentMonthYear } = this.state
 
         for (let i = 1; i < 13; i += 1) {
-            months.push(<a href="" className="rdatez-month" key={`${this.state.currentMonthYear}-months-${i}`} onClick={e => this.clickMonth(e, i)}>{moment(i, 'M').format('MMM')}</a>)
+            months.push(<button type="button" className="rdatez-month" key={`${currentMonthYear}-months-${i}`} onClick={(e) => this.clickMonth(e, i)}>{moment(i, 'M').format('MMM')}</button>)
         }
 
         return months
@@ -107,16 +114,19 @@ class ReactDatez extends Component {
 
     initialiseYearCalendar() {
         const years = []
+        const { visibleYear } = this.state
 
-        for (let i = this.state.visibleYear.format('YYYY'); i > (this.state.visibleYear.format('YYYY') - 12); i -= 1) {
-            years.push(<a href="" className="rdatez-year" key={`years-${i}`} onClick={e => this.clickYear(e, i)}>{i}</a>)
+        for (let i = visibleYear.format('YYYY'); i > (visibleYear.format('YYYY') - 12); i -= 1) {
+            years.push(<button type="button" className="rdatez-year" key={`years-${i}`} onClick={(e) => this.clickYear(e, i)}>{i}</button>)
         }
         return years
     }
 
     initialiseCalendar() {
         const calendar = []
-        for (let i = 0; i < this.props.displayCalendars; i += 1) {
+        const { displayCalendars } = this.props
+        const { currentMonthYear } = this.state
+        for (let i = 0; i < displayCalendars; i += 1) {
             calendar.push(i)
 
             if (i === 1) {
@@ -128,19 +138,22 @@ class ReactDatez extends Component {
         const days = moment.weekdaysMin()
         days.push(days.shift())
 
-        return calendar.map(i => (
+        return calendar.map((i) => (
             <div key={`calendar-${i}`}>
-                <header className="rdatez-calendar-title" key={`month-header-${i}`}>{ moment(this.state.currentMonthYear, 'M YYYY').add(i, 'months').format('MMMM YYYY') }</header>
+                <header className="rdatez-calendar-title" key={`month-header-${i}`}>{moment(currentMonthYear, 'M YYYY').add(i, 'months').format('MMMM YYYY')}</header>
                 <section className="rdatez-daysofweek">
-                    { days.map((d, index) => <span key={index}>{d}</span>) }
+                    {days.map((d, index) => <span key={index}>{d}</span>)}
                 </section>
-                { this.renderCalendar(i) }
+                {this.renderCalendar(i)}
             </div>
         ))
     }
 
     selectedDate(date) {
-        if (moment(this.state.selectedDate, this.props.dateFormat).diff(moment(date, this.props.dateFormat), 'days') === 0) {
+        const { selectedDate } = this.state
+        const { dateFormat } = this.props
+
+        if (moment(selectedDate, dateFormat).diff(moment(date, dateFormat), 'days') === 0) {
             return true
         }
 
@@ -148,7 +161,9 @@ class ReactDatez extends Component {
     }
 
     isPast(date) {
-        if (moment().startOf('day').diff(moment(date, this.props.dateFormat), 'days') > 0) {
+        const { dateFormat } = this.props
+
+        if (moment().startOf('day').diff(moment(date, dateFormat), 'days') > 0) {
             return true
         }
 
@@ -156,7 +171,9 @@ class ReactDatez extends Component {
     }
 
     isFuture(date) {
-        if (moment().startOf('day').diff(moment(date, this.props.dateFormat), 'days') < 0) {
+        const { dateFormat } = this.props
+
+        if (moment().startOf('day').diff(moment(date, dateFormat), 'days') < 0) {
             return true
         }
 
@@ -164,7 +181,9 @@ class ReactDatez extends Component {
     }
 
     isBeforeStartDate(date) {
-        if (moment(this.props.endDate).diff(moment(date, this.props.dateFormat)) < 0) {
+        const { dateFormat, endDate } = this.props
+
+        if (moment(endDate).diff(moment(date, dateFormat)) < 0) {
             return true
         }
 
@@ -172,7 +191,9 @@ class ReactDatez extends Component {
     }
 
     isAfterEndDate(date) {
-        if (moment(this.props.startDate).diff(moment(date, this.props.dateFormat)) > 0) {
+        const { dateFormat, startDate } = this.props
+
+        if (moment(startDate).diff(moment(date, dateFormat)) > 0) {
             return true
         }
 
@@ -199,8 +220,10 @@ class ReactDatez extends Component {
     }
 
     disabledTodayJump() {
+        const { startDate, endDate } = this.props
+
         // If today is outside of the start and endDate range disable the today jump.
-        if ((this.props.startDate && this.isBeforeStartDate(moment())) || (this.props.endDate && this.isAfterEndDate(moment()))) {
+        if ((startDate && this.isBeforeStartDate(moment())) || (endDate && this.isAfterEndDate(moment()))) {
             this.setState({
                 disabledToday: true
             })
@@ -208,9 +231,11 @@ class ReactDatez extends Component {
     }
 
     toggleYearJump() {
-        if (!this.state.monthSelectOpen) {
+        const { monthSelectOpen, yearJumpOpen } = this.state
+
+        if (!monthSelectOpen) {
             this.setState({
-                yearJumpOpen: !this.state.yearJumpOpen,
+                yearJumpOpen: !yearJumpOpen,
             })
         }
     }
@@ -218,10 +243,14 @@ class ReactDatez extends Component {
     jumpToToday(e) {
         e.preventDefault()
 
-        const date = (!this.props.allowFuture) ? moment().format(this.props.dateFormat) : moment().format(this.props.dateFormat)
+        const {
+            allowFuture, dateFormat, startDate, endDate, input
+        } = this.props
+
+        const date = (!allowFuture) ? moment().format(dateFormat) : moment().format(dateFormat)
 
         // catch the date range
-        if ((this.props.startDate && this.isBeforeStartDate(date)) || (this.props.endDate && this.isAfterEndDate(date))) {
+        if ((startDate && this.isBeforeStartDate(date)) || (endDate && this.isAfterEndDate(date))) {
             return false
         }
 
@@ -232,37 +261,40 @@ class ReactDatez extends Component {
             monthSelectOpen: false
         })
 
-        if (this.props.input) {
-            this.props.input.onChange(moment(date, this.props.dateFormat))
+        if (input) {
+            input.onChange(moment(date, dateFormat))
         }
 
         return true
     }
 
     nextButton() {
-        if (this.state.yearJumpOpen) {
+        const { yearJumpOpen, visibleYear, currentMonthYear } = this.state
+        if (yearJumpOpen) {
             this.setState({
-                visibleYear: this.state.visibleYear.add(12, 'years')
+                visibleYear: visibleYear.add(12, 'years')
             })
             this.initialiseYearCalendar()
         } else {
             this.setState({
-                currentMonthYear: moment(this.state.currentMonthYear, 'M YYYY').add(1, 'months').format('M YYYY'),
-                weekStartsOn: moment(`1 ${this.state.currentMonthYear}`, 'D M YYYY').add(1, 'months').day()
+                currentMonthYear: moment(currentMonthYear, 'M YYYY').add(1, 'months').format('M YYYY'),
+                weekStartsOn: moment(`1 ${currentMonthYear}`, 'D M YYYY').add(1, 'months').day()
             })
         }
     }
 
     prevButton() {
-        if (this.state.yearJumpOpen) {
+        const { yearJumpOpen, visibleYear, currentMonthYear } = this.state
+
+        if (yearJumpOpen) {
             this.setState({
-                visibleYear: this.state.visibleYear.subtract(12, 'years')
+                visibleYear: visibleYear.subtract(12, 'years')
             })
             this.initialiseYearCalendar()
         } else {
             this.setState({
-                currentMonthYear: moment(this.state.currentMonthYear, 'M YYYY').subtract(1, 'months').format('M YYYY'),
-                weekStartsOn: moment(`1 ${this.state.currentMonthYear}`, 'D M YYYY').subtract(1, 'months').day()
+                currentMonthYear: moment(currentMonthYear, 'M YYYY').subtract(1, 'months').format('M YYYY'),
+                weekStartsOn: moment(`1 ${currentMonthYear}`, 'D M YYYY').subtract(1, 'months').day()
             })
         }
     }
@@ -270,19 +302,23 @@ class ReactDatez extends Component {
     clickDay(e, date) {
         e.preventDefault()
 
-        if (this.isPast(date) && !this.props.allowPast) {
+        const {
+            allowPast, allowFuture, startDate, endDate, input, dateFormat, handleChange
+        } = this.props
+
+        if (this.isPast(date) && !allowPast) {
             return false
         }
 
-        if (this.isFuture(date) && !this.props.allowFuture) {
+        if (this.isFuture(date) && !allowFuture) {
             return false
         }
 
-        if (this.isBeforeStartDate(date) && this.props.startDate) {
+        if (this.isBeforeStartDate(date) && startDate) {
             return false
         }
 
-        if (this.isAfterEndDate(date) && this.props.endDate) {
+        if (this.isAfterEndDate(date) && endDate) {
             return false
         }
 
@@ -290,10 +326,10 @@ class ReactDatez extends Component {
             selectedDate: date
         })
 
-        if (this.props.input) {
-            this.props.input.onChange(moment(date, this.props.dateFormat).format())
+        if (input) {
+            input.onChange(moment(date, dateFormat).format())
         } else {
-            this.props.handleChange(moment(date, this.props.dateFormat).format())
+            handleChange(moment(date, dateFormat).format())
         }
 
         return this.closePicker()
@@ -301,20 +337,22 @@ class ReactDatez extends Component {
 
     clickMonth(e, month) {
         e.preventDefault()
+        const { currentMonthYear } = this.state
 
         this.setState({
-            currentMonthYear: moment(this.state.currentMonthYear, 'M YYYY').format(`${month} YYYY`),
-            weekStartsOn: moment(`1 ${this.state.currentMonthYear}`, 'D M YYYY').set('month', month - 1).day(),
+            currentMonthYear: moment(currentMonthYear, 'M YYYY').format(`${month} YYYY`),
+            weekStartsOn: moment(`1 ${currentMonthYear}`, 'D M YYYY').set('month', month - 1).day(),
             monthSelectOpen: false
         })
     }
 
     clickYear(e, year) {
         e.preventDefault()
+        const { currentMonthYear } = this.state
 
         this.setState({
-            currentMonthYear: moment(this.state.currentMonthYear, 'M YYYY').format(`M ${year}`),
-            weekStartsOn: moment(`1 ${this.state.currentMonthYear}`, 'D M YYYY').set('year', year).day(),
+            currentMonthYear: moment(currentMonthYear, 'M YYYY').format(`M ${year}`),
+            weekStartsOn: moment(`1 ${currentMonthYear}`, 'D M YYYY').set('year', year).day(),
             monthSelectOpen: true
         })
 
@@ -322,133 +360,160 @@ class ReactDatez extends Component {
     }
 
     renderCalendar(offset) {
-        const date = (offset) ? moment(this.state.currentMonthYear, 'M YYYY').add(offset, 'months') : moment(this.state.currentMonthYear, 'M YYYY')
+        const { currentMonthYear } = this.state
+        const { dateFormat } = this.props
+
+        const date = (offset) ? moment(currentMonthYear, 'M YYYY').add(offset, 'months') : moment(currentMonthYear, 'M YYYY')
         const daysInMonth = date.daysInMonth()
         const startsOn = date.day()
         const calendar = []
 
         for (let i = 1; i <= daysInMonth; i += 1) {
             const day = date.date(i)
-            const dayDate = day.format(this.props.dateFormat)
+            const dayDate = day.format(dateFormat)
             if (i === 1) {
                 calendar.push(<div className={`rdatez-day-spacer weekday-${day.day()}`} key={`${day.format('MY')}-spacer`} />)
             }
 
             const dayClasses = classnames(`rdatez-day weekday-${day.day()} ${day.format('M-YYYY')}-${i}`, {
-                'selected-day': this.selectedDate(day.format(this.props.dateFormat)),
-                'past-day': this.isPast(day.format(this.props.dateFormat)),
-                'before-start': this.isBeforeStartDate(day.format(this.props.dateFormat)),
-                'after-end': this.isAfterEndDate(day.format(this.props.dateFormat)),
+                'selected-day': this.selectedDate(day.format(dateFormat)),
+                'past-day': this.isPast(day.format(dateFormat)),
+                'before-start': this.isBeforeStartDate(day.format(dateFormat)),
+                'after-end': this.isAfterEndDate(day.format(dateFormat)),
                 today: moment().startOf('day').diff(day, 'days') === 0
             })
 
-            calendar.push(<a href="" className={dayClasses} key={`${day.format('DMY')}-${i}`} onClick={e => this.clickDay(e, dayDate)} tabIndex="-1">{i}</a>)
+            calendar.push(<button type="button" className={dayClasses} key={`${day.format('DMY')}-${i}`} onClick={(e) => this.clickDay(e, dayDate)} tabIndex="-1">{i}</button>)
         }
 
         return <section className={`rdatez-month-days starts-on-${startsOn}`}>{calendar}</section>
     }
 
     render() {
-        const input = this.props.input || {}
+        const {
+            input, className, position, inputClassName, style, inputStyle, displayCalendars, highlightWeekends, allowPast,
+            allowFuture, startDate, endDate, isRedux, placeholder, value, dateFormat, disableInputIcon, yearJump, yearButton
+        } = this.props
 
-        const rdatezClass = classnames('rdatez', this.props.className, {
-            'rdatez-centered': this.props.position === 'center',
-            'rdatez-right': this.props.position === 'right'
+        const {
+            datePickerOpen, datePickerInputHeight, disabledToday, yearJumpOpen, monthSelectOpen
+        } = this.state
+
+        const rdatezClass = classnames('rdatez', className, {
+            'rdatez-centered': position === 'center',
+            'rdatez-right': position === 'right'
         })
 
-        const rdatezInputClass = classnames(this.props.inputClassName)
+        const rdatezInputClass = classnames(inputClassName)
 
-        const rdatezStyle = this.props.style
-        const rdatezInputStyle = this.props.inputStyle
+        const rdatezStyle = style
+        const rdatezInputStyle = inputStyle
 
         const pickerClass = classnames('rdatez-picker', {
-            'multi-cal': (this.props.displayCalendars > 1),
-            'no-cal': (this.props.displayCalendars === 0),
-            'highlight-weekends': this.props.highlightWeekends,
-            'disallow-past': !this.props.allowPast,
-            'disallow-future': !this.props.allowFuture,
-            'disallow-before-start': this.props.startDate,
-            'disallow-after-end': this.props.endDate
+            'multi-cal': (displayCalendars > 1),
+            'no-cal': (displayCalendars === 0),
+            'highlight-weekends': highlightWeekends,
+            'disallow-past': !allowPast,
+            'disallow-future': !allowFuture,
+            'disallow-before-start': startDate,
+            'disallow-after-end': endDate
         })
 
         return (
-            <div className={rdatezClass} style={rdatezStyle} ref={(element) => { this.rdatez = element }} >
-                {!this.props.isRedux ?
-                    <input
-                        style={rdatezInputStyle}
-                        className={rdatezInputClass}
-                        onClick={this.openPicker}
-                        placeholder={this.props.placeholder}
-                        onFocus={this.openPicker}
-                        readOnly
-                        value={this.props.value && moment(this.props.value, 'YYYY-MM-DD').format(this.props.dateFormat)}
-                        ref={(element) => {
-                            this.dateInput = element
-                        }}
-                    /> :
-                    <input
-                        style={rdatezInputStyle}
-                        className={rdatezInputClass}
-                        onClick={this.openPicker}
-                        placeholder={this.props.placeholder}
-                        onFocus={this.openPicker}
-                        readOnly
-                        value={input.value && moment(input.value, 'YYYY-MM-DD').format(this.props.dateFormat)}
-                        ref={(element) => {
-                            this.dateInput = element
-                        }}
-                    /> }
-                {!this.props.disableInputIcon ?
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" onClick={this.openPicker} className="cal-icon">
-                        <g id="budicon-calendar">
-                            <path d="M24,2H19V.5a.5.5,0,0,0-1,0V2H7V.5a.5.5,0,0,0-1,0V2H1A1,1,0,0,0,0,3V23a1,1,0,0,0,1,1H24a1,1,0,0,0,1-1V3A1,1,0,0,0,24,2Zm0,21H1V8H24ZM24,7H1V3H24Z" />
-                        </g>
-                    </svg> : null
-                }
-                { this.state.datePickerOpen && <div className={pickerClass} style={{ top: this.state.datePickerInputHeight }}>
-                    <div>
-                        <header className="rdatez-header">
-                            <button className="rdatez-mobile-close" onClick={this.closePicker}>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
-                                    <path d="M16.8535,8.1465a.5.5,0,0,0-.707,0L12.5,11.793,8.8535,8.1465a.5.5,0,0,0-.707.707L11.793,12.5,8.1465,16.1465a.5.5,0,1,0,.707.707L12.5,13.207l3.6465,3.6465a.5.5,0,0,0,.707-.707L13.207,12.5l3.6465-3.6465A.5.5,0,0,0,16.8535,8.1465Z" />
-                                    <path d="M12.5,0A12.5,12.5,0,1,0,25,12.5,12.5,12.5,0,0,0,12.5,0Zm0,24A11.5,11.5,0,1,1,24,12.5,11.5129,11.5129,0,0,1,12.5,24Z" />
-                                </svg>
-                            </button>
-                            <button type="button" className="rdatez-btn rdatez-btn-prev" onClick={this.prevButton}>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
-                                    <path d="M14.5,23a.4984.4984,0,0,1-.3535-.1465l-9-9a.5.5,0,0,1,0-.707l9-9a.5.5,0,1,1,.707.707L6.207,13.5l8.6465,8.6465A.5.5,0,0,1,14.5,23Z" />
-                                </svg>
-                            </button>
-                            <button type="button" className="rdatez-btn rdatez-btn-next" onClick={this.nextButton}>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
-                                    <path d="M9.5,23a.4984.4984,0,0,0,.3535-.1465l9-9a.5.5,0,0,0,0-.707l-9-9a.5.5,0,0,0-.707.707L17.793,13.5,9.1465,22.1465A.5.5,0,0,0,9.5,23Z" />
-                                </svg>
-                            </button>
-                            { this.props.yearJump && <button type="button" className="rdatez-btn rdatez-btn-year" onClick={this.toggleYearJump}>
-                                {this.props.yearButton ? this.props.yearButton : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
-                                    <path d="M12.8535,6.8535a.5.5,0,0,0,0-.707l-6-6a.5.5,0,0,0-.707,0l-6,6a.5.5,0,0,0,.707.707L6,1.707V20.5a.5.5,0,0,0,1,0V1.707l5.1465,5.1465A.5.5,0,0,0,12.8535,6.8535Z" />
-                                    <path d="M24.8535,18.1465a.5.5,0,0,0-.707,0L19,23.293V4.5a.5.5,0,0,0-1,0V23.293l-5.1465-5.1465a.5.5,0,0,0-.707.707l6,6a.5.5,0,0,0,.707,0l6-6A.5.5,0,0,0,24.8535,18.1465Z" />
-                                </svg>}
-                            </button> }
-                            { !this.state.disabledToday && <button type="button" className="rdatez-btn rdatez-btn-today" onClick={e => this.jumpToToday(e)}>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
-                                    <path d="M24,3H19V1.5a.5.5,0,0,0-1,0V3H7V1.5a.5.5,0,0,0-1,0V3H1A1,1,0,0,0,0,4V24a1,1,0,0,0,1,1H24a1,1,0,0,0,1-1V4A1,1,0,0,0,24,3Zm0,21H1V9H24ZM24,8H1V4H24Z" />
-                                    <path d="M12.5,22A5.5,5.5,0,1,0,7,16.5,5.5,5.5,0,0,0,12.5,22Zm0-10A4.5,4.5,0,1,1,8,16.5,4.5,4.5,0,0,1,12.5,12Z" />
-                                    <path d="M14.2,18.9a.5.5,0,1,0,.6-.8L13,16.75V14.5a.5.5,0,0,0-1,0V17a.5.5,0,0,0,.2.4Z" />
-                                </svg>
-                            </button> }
-                        </header>
-                        <div className="rdatez-calendar">
-                            { this.initialiseCalendar() }
+            <div className={rdatezClass} style={rdatezStyle} ref={(element) => { this.rdatez = element }}>
+                {!isRedux
+                    ? (
+                        <input
+                            style={rdatezInputStyle}
+                            className={rdatezInputClass}
+                            onClick={this.openPicker}
+                            placeholder={placeholder}
+                            onFocus={this.openPicker}
+                            readOnly
+                            value={value && moment(value, 'YYYY-MM-DD').format(dateFormat)}
+                            ref={(element) => {
+                                this.dateInput = element
+                            }}
+                        />
+                    )
+                    : (
+                        <input
+                            style={rdatezInputStyle}
+                            className={rdatezInputClass}
+                            onClick={this.openPicker}
+                            placeholder={placeholder}
+                            onFocus={this.openPicker}
+                            readOnly
+                            value={input.value && moment(input.value, 'YYYY-MM-DD').format(dateFormat)}
+                            ref={(element) => {
+                                this.dateInput = element
+                            }}
+                        />
+                    )}
+                {!disableInputIcon
+                    ? (
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" onClick={this.openPicker} className="cal-icon">
+                            <g id="budicon-calendar">
+                                <path d="M24,2H19V.5a.5.5,0,0,0-1,0V2H7V.5a.5.5,0,0,0-1,0V2H1A1,1,0,0,0,0,3V23a1,1,0,0,0,1,1H24a1,1,0,0,0,1-1V3A1,1,0,0,0,24,2Zm0,21H1V8H24ZM24,7H1V3H24Z" />
+                            </g>
+                        </svg>
+                    ) : null}
+                {datePickerOpen && (
+                    <div className={pickerClass} style={{ top: datePickerInputHeight }}>
+                        <div>
+                            <header className="rdatez-header">
+                                <button type="button" className=" rdatez-mobile-close" onClick={this.closePicker}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
+                                        <path d="M16.8535,8.1465a.5.5,0,0,0-.707,0L12.5,11.793,8.8535,8.1465a.5.5,0,0,0-.707.707L11.793,12.5,8.1465,16.1465a.5.5,0,1,0,.707.707L12.5,13.207l3.6465,3.6465a.5.5,0,0,0,.707-.707L13.207,12.5l3.6465-3.6465A.5.5,0,0,0,16.8535,8.1465Z" />
+                                        <path d="M12.5,0A12.5,12.5,0,1,0,25,12.5,12.5,12.5,0,0,0,12.5,0Zm0,24A11.5,11.5,0,1,1,24,12.5,11.5129,11.5129,0,0,1,12.5,24Z" />
+                                    </svg>
+                                </button>
+                                <button type="button" className="rdatez-btn rdatez-btn-prev" onClick={this.prevButton}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
+                                        <path d="M14.5,23a.4984.4984,0,0,1-.3535-.1465l-9-9a.5.5,0,0,1,0-.707l9-9a.5.5,0,1,1,.707.707L6.207,13.5l8.6465,8.6465A.5.5,0,0,1,14.5,23Z" />
+                                    </svg>
+                                </button>
+                                <button type="button" className="rdatez-btn rdatez-btn-next" onClick={this.nextButton}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
+                                        <path d="M9.5,23a.4984.4984,0,0,0,.3535-.1465l9-9a.5.5,0,0,0,0-.707l-9-9a.5.5,0,0,0-.707.707L17.793,13.5,9.1465,22.1465A.5.5,0,0,0,9.5,23Z" />
+                                    </svg>
+                                </button>
+                                {yearJump && (
+                                    <button type="button" className="rdatez-btn rdatez-btn-year" onClick={this.toggleYearJump}>
+                                        {yearButton || (
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
+                                                <path d="M12.8535,6.8535a.5.5,0,0,0,0-.707l-6-6a.5.5,0,0,0-.707,0l-6,6a.5.5,0,0,0,.707.707L6,1.707V20.5a.5.5,0,0,0,1,0V1.707l5.1465,5.1465A.5.5,0,0,0,12.8535,6.8535Z" />
+                                                <path d="M24.8535,18.1465a.5.5,0,0,0-.707,0L19,23.293V4.5a.5.5,0,0,0-1,0V23.293l-5.1465-5.1465a.5.5,0,0,0-.707.707l6,6a.5.5,0,0,0,.707,0l6-6A.5.5,0,0,0,24.8535,18.1465Z" />
+                                            </svg>
+                                        )}
+                                    </button>
+                                )}
+                                {!disabledToday && (
+                                    <button type="button" className="rdatez-btn rdatez-btn-today" onClick={(e) => this.jumpToToday(e)}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
+                                            <path d="M24,3H19V1.5a.5.5,0,0,0-1,0V3H7V1.5a.5.5,0,0,0-1,0V3H1A1,1,0,0,0,0,4V24a1,1,0,0,0,1,1H24a1,1,0,0,0,1-1V4A1,1,0,0,0,24,3Zm0,21H1V9H24ZM24,8H1V4H24Z" />
+                                            <path d="M12.5,22A5.5,5.5,0,1,0,7,16.5,5.5,5.5,0,0,0,12.5,22Zm0-10A4.5,4.5,0,1,1,8,16.5,4.5,4.5,0,0,1,12.5,12Z" />
+                                            <path d="M14.2,18.9a.5.5,0,1,0,.6-.8L13,16.75V14.5a.5.5,0,0,0-1,0V17a.5.5,0,0,0,.2.4Z" />
+                                        </svg>
+                                    </button>
+                                )}
+                            </header>
+                            <div className="rdatez-calendar">
+                                {this.initialiseCalendar()}
+                            </div>
+                            {yearJumpOpen && (
+                                <section className="rdatez-calendar-year">
+                                    {this.initialiseYearCalendar()}
+                                </section>
+                            )}
+                            {monthSelectOpen && (
+                                <section className="rdatez-calendar-month">
+                                    {this.initialiseMonthCalendar()}
+                                </section>
+                            )}
                         </div>
-                        {this.state.yearJumpOpen && <section className="rdatez-calendar-year">
-                            { this.initialiseYearCalendar() }
-                        </section> }
-                        {this.state.monthSelectOpen && <section className="rdatez-calendar-month">
-                            { this.initialiseMonthCalendar() }
-                        </section> }
                     </div>
-                </div> }
+                )}
             </div>
         )
     }

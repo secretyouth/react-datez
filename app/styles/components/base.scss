@@ -4,7 +4,7 @@
 
 html, body {
 	width: 100%;
-	height: 100%;
+	//height: 100%;
 	font-family: helvetica, sans-serif;
 	font-size: 100%;
 }
@@ -14,7 +14,7 @@ body {
     font-family: helvetica, sans-serif;
 	font-weight: 200;
 	font-size: 16px;
-    color: var(--base-font-colour);
+    color: $base-font-colour;
 }
 
 .container {
@@ -23,7 +23,7 @@ body {
 	margin: 0 auto;
 	text-align: center;
 
-	@media (width < 769px) {
+	@media (max-width : 769px) {
 		padding: 0;
 	}
 }
@@ -70,6 +70,7 @@ hr {
 }
 
 .rdatez {
+	& button,
 	& a {
 		color: #666;
 	}
@@ -78,7 +79,7 @@ hr {
 		color: white;
 	}
 	& svg.cal-icon {
-		fill: var(--gray-light);
+		fill: $gray-light;
 	}
 }
 
@@ -86,7 +87,7 @@ hr {
 button[type="submit"] {
 	appearance: none;
 	border: none;
-	background: var(--primary);
+	background: $primary;
 	color: white;
 	padding: 1rem 3rem;
 	border-radius: 8px;

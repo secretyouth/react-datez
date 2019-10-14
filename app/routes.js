@@ -7,13 +7,13 @@ import thunk from 'redux-thunk'
 import { persistStore, autoRehydrate } from 'redux-persist'
 import { asyncSessionStorage } from 'redux-persist/storages'
 
-import reducer from './reducers/'
+import reducer from './reducers'
 
 import Home from './views/home'
 
 const store = createStore(reducer, compose(
     applyMiddleware(thunk),
-    window.devToolsExtension ? window.devToolsExtension() : f => f
+    window.devToolsExtension ? window.devToolsExtension() : (f) => f
 ), autoRehydrate())
 
 class Routes extends Component {
@@ -21,7 +21,7 @@ class Routes extends Component {
         super(props)
 
         this.state = {
-            rehydrate: false
+            rehydrated: false
         }
 
         this.onUpdate = this.onUpdate.bind(this)
@@ -38,7 +38,9 @@ class Routes extends Component {
     }
 
     render() {
-        if (this.state.rehydrated) {
+        const { rehydrated } = this.state
+
+        if (rehydrated) {
             return (
                 <Provider store={store}>
                     <Router history={browserHistory} onUpdate={() => this.onUpdate()}>
