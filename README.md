@@ -70,7 +70,8 @@ ReactDatez.propTypes = {
     placeholder: PropTypes.string,
     defaultMonth: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     locale: PropTypes.string,
-    yearButton: PropTypes.node
+    yearButton: PropTypes.node,
+    firstDayOfWeek: PropTypes.oneOf(['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']),
 }
 ```
 #### input
@@ -145,6 +146,10 @@ Change moment locale - This will change the all moment dates to be the locale.
 
 #### yearButton
 Change year select button with custom element
+
+#### firstDayOfWeek
+Set the first day of the week
+> Default: 'Mo'
 
 ---
 
