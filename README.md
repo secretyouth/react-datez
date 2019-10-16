@@ -55,6 +55,8 @@ ReactDatez.propTypes = {
     className: PropTypes.string,
     inputClassName: PropTypes.string,
     disableInputIcon: PropTypes.bool,
+    disable: PropTypes.bool,
+    wrapperStyle: PropTypes.object,
     handleChange: PropTypes.func,
     value: PropTypes.string,
     displayCalendars: PropTypes.number,
@@ -151,7 +153,7 @@ Change moment locale - This will change the all moment dates to be the locale.
 Change year select button with custom element
 
 #### firstDayOfWeek
-Set the first day of the week
+Set the first day of the week, in standard 2 letter format (e.g. Mo, Tu, We, Th, Fr, Sa, Su)
 > Default: 'Mo'
 
 ---
