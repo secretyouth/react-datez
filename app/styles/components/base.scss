@@ -42,6 +42,12 @@ input {
 
 label {
 	display: block;
+
+	> small {
+		margin-top: 0.5rem;
+		opacity: 0.5;
+		display: block;
+	}
 }
 
 hr {

@@ -90,14 +90,6 @@ class Home extends Component {
                     </div>
 
                     <div className="form-group m-b-3">
-                        <label htmlFor="exampleDateExtraStyleWrapper" className="m-b-1">
-                            Custom Style for wrapper
-                            <small>Inspect the element on see style</small>
-                        </label>
-                        <ReactDatez id="exampleDateExtraStyleWrapper" style={{ fontSize: '30px' }} handleChange={this.handleChangeExtraStyleWrapper} value={dateInputExtraStyleWrapper} />
-                    </div>
-
-                    <div className="form-group m-b-3">
                         <label htmlFor="exampleDateExtraClass" className="m-b-1">
                             Custom Style for input
                             <small>Select date to see magic</small>

@@ -405,8 +405,6 @@ class ReactDatez extends Component {
         })
 
         const rdatezInputClass = classnames(inputClassName)
-
-        const rdatezStyle = style
         const rdatezInputStyle = inputStyle
 
         const pickerClass = classnames('rdatez-picker', {
@@ -420,7 +418,7 @@ class ReactDatez extends Component {
         })
 
         return (
-            <div className={rdatezClass} style={rdatezStyle} ref={(element) => { this.rdatez = element }}>
+            <div style={style} className={rdatezClass} ref={(element) => { this.rdatez = element }}>
                 {!isRedux
                     ? (
                         <input
