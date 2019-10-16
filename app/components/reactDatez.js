@@ -1,5 +1,4 @@
 /* eslint-disable react/no-unused-state */
-
 import React, { Component, PropTypes } from 'react'
 import moment from 'moment'
 import classnames from 'classnames'
@@ -499,7 +498,7 @@ class ReactDatez extends Component {
                 {datePickerOpen && (
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" onClick={this.clearSelected} className="cal-icon">
                         <g id="budicon-cross-ui">
-                            <path d="M18.8535,17.1465a.5.5,0,0,1-.707.707L12.5,12.207,6.8535,17.8535a.5.5,0,0,1-.707-.707L11.793,11.5,6.1465,5.8535a.5.5,0,1,1,.707-.707L12.5,10.793l5.6465-5.6465a.5.5,0,1,1,.707.707L13.207,11.5Z"/>
+                            <path d="M18.8535,17.1465a.5.5,0,0,1-.707.707L12.5,12.207,6.8535,17.8535a.5.5,0,0,1-.707-.707L11.793,11.5,6.1465,5.8535a.5.5,0,1,1,.707-.707L12.5,10.793l5.6465-5.6465a.5.5,0,1,1,.707.707L13.207,11.5Z" />
                         </g>
                     </svg>
                 )}
