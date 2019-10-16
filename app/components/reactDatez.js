@@ -21,6 +21,7 @@ class ReactDatez extends Component {
         }
 
         this.initialisePicker = this.initialisePicker.bind(this)
+        this.clearSelected = this.clearSelected.bind(this)
         this.handleClickEvent = this.handleClickEvent.bind(this)
         this.initialiseCalendar = this.initialiseCalendar.bind(this)
         this.initialiseMonthCalendar = this.initialiseMonthCalendar.bind(this)
@@ -94,6 +95,20 @@ class ReactDatez extends Component {
         })
     }
 
+    clearSelected() {
+        const {
+            input, handleChange
+        } = this.props
+
+        if (input) {
+            input.onChange('')
+        } else {
+            handleChange('')
+        }
+
+        this.closePicker()
+    }
+
     handleClickEvent(event) {
         const { datePickerOpen } = this.state
         if (this.rdatez && !this.rdatez.contains(event.target) && datePickerOpen) {
@@ -123,6 +138,9 @@ class ReactDatez extends Component {
     }
 
     initialiseCalendar() {
+        const {
+            firstDayOfWeek
+        } = this.props
         const calendar = []
         const { displayCalendars } = this.props
         const { currentMonthYear } = this.state
@@ -138,11 +156,11 @@ class ReactDatez extends Component {
         const days = moment.weekdaysMin()
         let dayOffset = 0
 
-        if (days.includes(this.props.firstDayOfWeek)) {
-            dayOffset = days.indexOf(this.props.firstDayOfWeek)
+        if (days.includes(firstDayOfWeek)) {
+            dayOffset = days.indexOf(firstDayOfWeek)
             dayOffset = (7 - Math.abs(dayOffset === 0 ? 6 : dayOffset - 1)) % 7
 
-            while (days[0] !== this.props.firstDayOfWeek) {
+            while (days[0] !== firstDayOfWeek) {
                 days.push(days.shift())
             }
         }
@@ -210,14 +228,19 @@ class ReactDatez extends Component {
     }
 
     openPicker() {
-        document.body.classList.add('date-open')
+        const {
+            disable
+        } = this.props
+        if (!disable) {
+            document.body.classList.add('date-open')
 
-        this.setState({
-            datePickerOpen: true
-        })
+            this.setState({
+                datePickerOpen: true
+            })
 
-        // Disabled todayJump
-        this.disabledTodayJump()
+            // Disabled todayJump
+            this.disabledTodayJump()
+        }
     }
 
     closePicker() {
@@ -369,24 +392,32 @@ class ReactDatez extends Component {
     }
 
     renderCalendar({ calendarOffset, dayOffset }) {
-        const date = (calendarOffset) ? moment(this.state.currentMonthYear, 'M YYYY').add(calendarOffset, 'months') : moment(this.state.currentMonthYear, 'M YYYY')
+        const {
+            dateFormat
+        } = this.props
+
+        const {
+            currentMonthYear,
+        } = this.state
+
+        const date = (calendarOffset) ? moment(currentMonthYear, 'M YYYY').add(calendarOffset, 'months') : moment(currentMonthYear, 'M YYYY')
         const daysInMonth = date.daysInMonth()
         const startsOn = date.day()
         const calendar = []
 
         for (let i = 1; i <= daysInMonth; i += 1) {
             const day = date.date(i)
-            const dayDate = day.format(this.props.dateFormat)
+            const dayDate = day.format(dateFormat)
 
             if (i === 1) {
                 calendar.push(<div className={`rdatez-day-spacer weekday-${(day.day() + dayOffset) % 7}`} key={`${day.format('MY')}-spacer`} />)
             }
 
             const dayClasses = classnames(`rdatez-day weekday-${(day.day() + dayOffset) % 7} ${day.format('M-YYYY')}-${i}`, {
-                'selected-day': this.selectedDate(day.format(this.props.dateFormat)),
-                'past-day': this.isPast(day.format(this.props.dateFormat)),
-                'before-start': this.isBeforeStartDate(day.format(this.props.dateFormat)),
-                'after-end': this.isAfterEndDate(day.format(this.props.dateFormat)),
+                'selected-day': this.selectedDate(day.format(dateFormat)),
+                'past-day': this.isPast(day.format(dateFormat)),
+                'before-start': this.isBeforeStartDate(day.format(dateFormat)),
+                'after-end': this.isAfterEndDate(day.format(dateFormat)),
                 today: moment().startOf('day').diff(day, 'days') === 0
             })
 
@@ -398,7 +429,7 @@ class ReactDatez extends Component {
 
     render() {
         const {
-            input, className, position, inputClassName, style, inputStyle, displayCalendars, highlightWeekends, allowPast,
+            input, className, position, disable, inputClassName, wrapperStyle, inputStyle, displayCalendars, highlightWeekends, allowPast,
             allowFuture, startDate, endDate, isRedux, placeholder, value, dateFormat, disableInputIcon, yearJump, yearButton
         } = this.props
 
@@ -408,7 +439,8 @@ class ReactDatez extends Component {
 
         const rdatezClass = classnames('rdatez', className, {
             'rdatez-centered': position === 'center',
-            'rdatez-right': position === 'right'
+            'rdatez-right': position === 'right',
+            'rdatez-disabled': disable
         })
 
         const rdatezInputClass = classnames(inputClassName)
@@ -425,7 +457,7 @@ class ReactDatez extends Component {
         })
 
         return (
-            <div style={style} className={rdatezClass} ref={(element) => { this.rdatez = element }}>
+            <div style={wrapperStyle} className={rdatezClass} ref={(element) => { this.rdatez = element }}>
                 {!isRedux
                     ? (
                         <input
@@ -434,6 +466,7 @@ class ReactDatez extends Component {
                             onClick={this.openPicker}
                             placeholder={placeholder}
                             onFocus={this.openPicker}
+                            disabled={disable}
                             readOnly
                             value={value && moment(value, 'YYYY-MM-DD').format(dateFormat)}
                             ref={(element) => {
@@ -448,6 +481,7 @@ class ReactDatez extends Component {
                             onClick={this.openPicker}
                             placeholder={placeholder}
                             onFocus={this.openPicker}
+                            disabled={disable}
                             readOnly
                             value={input.value && moment(input.value, 'YYYY-MM-DD').format(dateFormat)}
                             ref={(element) => {
@@ -455,19 +489,25 @@ class ReactDatez extends Component {
                             }}
                         />
                     )}
-                {!disableInputIcon
-                    ? (
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" onClick={this.openPicker} className="cal-icon">
-                            <g id="budicon-calendar">
-                                <path d="M24,2H19V.5a.5.5,0,0,0-1,0V2H7V.5a.5.5,0,0,0-1,0V2H1A1,1,0,0,0,0,3V23a1,1,0,0,0,1,1H24a1,1,0,0,0,1-1V3A1,1,0,0,0,24,2Zm0,21H1V8H24ZM24,7H1V3H24Z" />
-                            </g>
-                        </svg>
-                    ) : null}
+                {(!datePickerOpen && !disableInputIcon) && (
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" onClick={this.openPicker} className="cal-icon">
+                        <g id="budicon-calendar">
+                            <path d="M24,2H19V.5a.5.5,0,0,0-1,0V2H7V.5a.5.5,0,0,0-1,0V2H1A1,1,0,0,0,0,3V23a1,1,0,0,0,1,1H24a1,1,0,0,0,1-1V3A1,1,0,0,0,24,2Zm0,21H1V8H24ZM24,7H1V3H24Z" />
+                        </g>
+                    </svg>
+                )}
+                {datePickerOpen && (
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" onClick={this.clearSelected} className="cal-icon">
+                        <g id="budicon-cross-ui">
+                            <path d="M18.8535,17.1465a.5.5,0,0,1-.707.707L12.5,12.207,6.8535,17.8535a.5.5,0,0,1-.707-.707L11.793,11.5,6.1465,5.8535a.5.5,0,1,1,.707-.707L12.5,10.793l5.6465-5.6465a.5.5,0,1,1,.707.707L13.207,11.5Z"/>
+                        </g>
+                    </svg>
+                )}
                 {datePickerOpen && (
                     <div className={pickerClass} style={{ top: datePickerInputHeight }}>
                         <div>
                             <header className="rdatez-header">
-                                <button type="button" className=" rdatez-mobile-close" onClick={this.closePicker}>
+                                <button type="button" className=" rdatez-mobile-close" onClick={this.clearSelected}>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
                                         <path d="M16.8535,8.1465a.5.5,0,0,0-.707,0L12.5,11.793,8.8535,8.1465a.5.5,0,0,0-.707.707L11.793,12.5,8.1465,16.1465a.5.5,0,1,0,.707.707L12.5,13.207l3.6465,3.6465a.5.5,0,0,0,.707-.707L13.207,12.5l3.6465-3.6465A.5.5,0,0,0,16.8535,8.1465Z" />
                                         <path d="M12.5,0A12.5,12.5,0,1,0,25,12.5,12.5,12.5,0,0,0,12.5,0Zm0,24A11.5,11.5,0,1,1,24,12.5,11.5129,11.5129,0,0,1,12.5,24Z" />
@@ -539,7 +579,8 @@ ReactDatez.defaultProps = {
 
 ReactDatez.propTypes = {
     input: PropTypes.object,
-    style: PropTypes.object,
+    wrapperStyle: PropTypes.object,
+    disable: PropTypes.bool,
     inputStyle: PropTypes.object,
     className: PropTypes.string,
     inputClassName: PropTypes.string,

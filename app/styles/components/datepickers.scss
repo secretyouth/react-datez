@@ -39,6 +39,18 @@ body.date-open {
 		}
 	}
 
+	&.rdatez-disabled {
+		& > input {
+			opacity: 0.7;
+			cursor: not-allowed;
+		}
+
+		& .cal-icon:hover {
+			cursor: not-allowed;
+		}
+
+	}
+
 	& .cal-icon {
 		position: absolute;
 		top: 50%;
@@ -80,7 +92,6 @@ body.date-open {
 		}
 
 		@media screen and (min-width : 768px) {
-			max-width: 400px;
 			min-width: 400px;
 		}
 		&.no-cal{
@@ -296,7 +307,7 @@ body.date-open {
 		position: relative;
 		transition: none;
 		cursor: pointer;
-		
+
 
 		&:hover,&:active, &:focus{
 			appearance: none!important;
@@ -375,7 +386,7 @@ body.date-open {
 		height: 40px;
 		position: relative;
 		transition: none;
-		
+
 		&:after {
 			display: none;
 		}
@@ -384,7 +395,7 @@ body.date-open {
 			cursor: pointer;
 			background: rgba(0,0,0,.05);
 		}
-		
+
 		&,&:hover,&:active, &:focus{
 			appearance: none!important;
 			border:none;

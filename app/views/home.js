@@ -12,7 +12,6 @@ class Home extends Component {
             dateInput: '',
             dateInputDisableIcon: '',
             dateInputExtraClass: '',
-            dateInputExtraStyleWrapper: '',
             dateInputExtraStyleInput: ''
         }
 
@@ -20,7 +19,6 @@ class Home extends Component {
         this.handleChange = this.handleChange.bind(this)
         this.handleChangeDisableIcon = this.handleChangeDisableIcon.bind(this)
         this.handleChangeExtraClass = this.handleChangeExtraClass.bind(this)
-        this.handleChangeExtraStyleWrapper = this.handleChangeExtraStyleWrapper.bind(this)
         this.handleChangeExtraStyleInput = this.handleChangeExtraStyleInput.bind(this)
     }
 
@@ -43,11 +41,6 @@ class Home extends Component {
         this.setState({ dateInputExtraClass: value })
     }
 
-    handleChangeExtraStyleWrapper(value) {
-        console.log('Input change for wrapped style', value)
-        this.setState({ dateInputExtraStyleWrapper: value })
-    }
-
     handleChangeExtraStyleInput(value) {
         console.log('Input changed for input element style', value)
         this.setState({ dateInputExtraStyleInput: value })
@@ -56,7 +49,7 @@ class Home extends Component {
     render() {
         const { handleSubmit } = this.props
         const {
-            dateInput, dateInputDisableIcon, dateInputExtraStyleWrapper, dateInputExtraStyleInput, dateInputExtraClass
+            dateInput, dateInputDisableIcon, dateInputExtraStyleInput, dateInputExtraClass
         } = this.state
 
         return (
@@ -85,8 +78,13 @@ class Home extends Component {
                     </div>
 
                     <div className="form-group m-b-3">
+                        <label htmlFor="exampleDisabledField" className="m-b-1">Disable Input Icon</label>
+                        <ReactDatez id="exampleDisabledField" disableInputIcon handleChange={this.handleChangeDisableIcon} value={dateInputDisableIcon} />
+                    </div>
+
+                    <div className="form-group m-b-3">
                         <label htmlFor="exampleDateExtraClass" className="m-b-1">Disable Input Icon</label>
-                        <ReactDatez id="exampleDateExtraClass" disableInputIcon handleChange={this.handleChangeDisableIcon} value={dateInputDisableIcon} />
+                        <ReactDatez id="exampleDateExtraClass" disableInputIcon handleChange={this.handleChangeDisableIcon} value={dateInputDisableIcon} disable />
                     </div>
 
                     <div className="form-group m-b-3">
@@ -126,7 +124,7 @@ class Home extends Component {
 
                     <div className="form-group m-b-3">
                         <label htmlFor="dateOfBirth" className="m-b-1">Date of Birth</label>
-                        <Field name="dateOfBirth" id="dateOfBirth" component={ReduxReactDatez} allowPast allowFuture={false} displayCalendars={2} position="center" />
+                        <Field name="dateOfBirth" id="dateOfBirth" component={ReduxReactDatez} allowPast allowFuture={false} position="center" />
                     </div>
 
                     <div className="form-group m-b-3">

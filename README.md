@@ -86,6 +86,9 @@ Add additional styles directly on main input element
 #### className
 Add additional classes to the wrapper div element
 
+#### disable
+Disables the input
+
 #### inputClassName
 Add additional classes to the main input element
 
