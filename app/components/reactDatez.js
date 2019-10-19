@@ -138,7 +138,8 @@ class ReactDatez extends Component {
 
     initialiseCalendar() {
         const {
-            firstDayOfWeek
+            firstDayOfWeek,
+            currentMonthYearFormat
         } = this.props
         const calendar = []
         const { displayCalendars } = this.props
@@ -166,11 +167,11 @@ class ReactDatez extends Component {
 
         return calendar.map((i) => (
             <div key={`calendar-${i}`}>
-                <header className="rdatez-calendar-title" key={`month-header-${i}`}>{moment(currentMonthYear, 'M YYYY').add(i, 'months').format('MMMM YYYY')}</header>
+                <header className="rdatez-calendar-title" key={`month-header-${i}`}>{moment(currentMonthYear, 'M YYYY').add(i, 'months').format(currentMonthYearFormat)}</header>
                 <section className="rdatez-daysofweek">
                     {days.map((d, index) => <span key={index}>{d}</span>)}
                 </section>
-                { this.renderCalendar({ calendarOffset: i, dayOffset }) }
+                {this.renderCalendar({ calendarOffset: i, dayOffset })}
             </div>
         ))
     }
@@ -573,7 +574,8 @@ ReactDatez.defaultProps = {
     yearJump: true,
     position: 'left',
     locale: 'en',
-    firstDayOfWeek: 'Mo'
+    firstDayOfWeek: 'Mo',
+    currentMonthYearFormat: 'MMMM YYYY',
 }
 
 ReactDatez.propTypes = {
@@ -601,6 +603,7 @@ ReactDatez.propTypes = {
     locale: PropTypes.string,
     yearButton: PropTypes.node,
     firstDayOfWeek: PropTypes.oneOf(['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']),
+    currentMonthYearFormat: PropTypes.string,
 }
 
 export default ReactDatez

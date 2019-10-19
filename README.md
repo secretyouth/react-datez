@@ -74,6 +74,7 @@ ReactDatez.propTypes = {
     locale: PropTypes.string,
     yearButton: PropTypes.node,
     firstDayOfWeek: PropTypes.oneOf(['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']),
+    currentMonthYearFormat: PropTypes.string
 }
 ```
 #### input
@@ -155,6 +156,10 @@ Change year select button with custom element
 #### firstDayOfWeek
 Set the first day of the week, in standard 2 letter format (e.g. Mo, Tu, We, Th, Fr, Sa, Su)
 > Default: 'Mo'
+
+#### currentMonthYearFormat
+Change month year format on title. See moment.js for formatting.
+>Default: 'MMMM YYYY'
 
 ---
 
