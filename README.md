@@ -44,7 +44,7 @@ Than import into your components
 
 `import { ReactDatez, ReduxReactDatez } from 'react-datez'`
 
-[Demo](https://codesandbox.io/s/react-datez-demo-mse17?fontsize=14)
+[![Edit react-datez-demo](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/upbeat-hugle-mse17?fontsize=14)
 
 ---
 
