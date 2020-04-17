@@ -28,6 +28,11 @@ body {
 	}
 }
 
+.container-sm {
+	max-width: 320px;
+	margin: 0 auto;
+}
+
 img {
 	display: block;
 	width: 100%;
@@ -38,6 +43,7 @@ input {
 	padding: .7rem 1rem;
 	border: 1px solid rgba(0,0,0,.5);
 	border-radius: 4px;
+	width: 100%;
 }
 
 label {

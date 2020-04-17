@@ -58,7 +58,7 @@ class Home extends Component {
 
                 <hr />
 
-                <form onSubmit={handleSubmit(this.nextStep)}>
+                <form onSubmit={handleSubmit(this.nextStep)} className="container-sm">
                     <div className="form-group m-b-3">
                         <label htmlFor="exampleDate1" className="m-b-1">Standard Date Picker</label>
                         <Field name="exampleDate1" id="exampleDate1" component={ReduxReactDatez} />
