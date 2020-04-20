@@ -132,6 +132,15 @@ class Home extends Component {
                         <Field name="exampleDate8" id="exampleDate8" component={ReduxReactDatez} dateFormat="YYYY-MM-DD" highlightWeekends />
                     </div>
 
+                    <hr />
+
+                    <h2>i18n</h2>
+
+                    <div className="form-group m-b-3">
+                        <label htmlFor="exampleDate9" className="m-b-1">Locale and Format</label>
+                        <Field name="exampleDate9" id="exampleDate9" component={ReduxReactDatez} dateFormat="YYYY년 M월 D일" currentMonthYearFormat="YYYY년 M월" highlightWeekends allowPast />
+                    </div>
+
                     <button type="submit">Submit</button>
                 </form>
             </div>
