@@ -1,4 +1,4 @@
-# react-datez
+# No Longer Supported
 This repo is no longer supported, however it is open to pll requests. Apologies for any inconvenience.
 
 [![NPM](https://nodei.co/npm/react-datez.png)](https://nodei.co/npm/react-datez/) [![npm version](https://badge.fury.io/js/react-datez.svg)](https://badge.fury.io/js/react-datez)
