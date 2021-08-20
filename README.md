@@ -1,3 +1,6 @@
+# react-datez
+This repo is no longer supported, however it is open to pll requests. Apologies for any inconvenience.
+
 [![NPM](https://nodei.co/npm/react-datez.png)](https://nodei.co/npm/react-datez/) [![npm version](https://badge.fury.io/js/react-datez.svg)](https://badge.fury.io/js/react-datez)
 
 ![react-dates-banner](https://user-images.githubusercontent.com/2343152/27081129-5f675992-5082-11e7-8254-0d59e88756a8.png)
